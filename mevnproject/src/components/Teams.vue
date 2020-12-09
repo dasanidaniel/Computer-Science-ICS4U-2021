@@ -1,49 +1,82 @@
  <template>
- <div >
-   <div >
-     <div >
-       <div >Stats</div>
+  <div>
+    <div>
+      <div>
+        <div>Stats</div>
 
-       <div >
-         This is where a table with overall statistics will be placed.       </div>
-     <div>
-         <table class="table table-hover">
+        <div>This is where a table with overall statistics will be placed.</div>
+        <div>
+          <table class="table table-hover">
             <thead>
-            <tr>
-              <th>Name</th>
-              <th>W</th>
-              <th>L</th>
-              <th>W/L</th>
-              <th>GB</th>
-              <th>HOME</th>
-              <th>AWAY</th>
-              <th>DIV</th>
-              <th>CONF</th>
-              <th>PPG</th>
-              <th>OPP PPG</th>
-              <th>DIFF</th>
-              <th>STRK</th>
-              <th>L10</th>
-
-            </tr>
+              <tr>
+                <th>Name</th>
+                <th>W</th>
+                <th>L</th>
+                <th>W/L</th>
+                <th>GB</th>
+                <th>HOME</th>
+                <th>AWAY</th>
+                <th>DIV</th>
+                <th>CONF</th>
+                <th>PPG</th>
+                <th>OPP PPG</th>
+                <th>DIFF</th>
+                <th>STRK</th>
+                <th>L10</th>
+              </tr>
             </thead>
+
             <tbody>
-               <!-- <tr v-for="team in teams" :key="post._id">
-                  <td>{{ post.title }}</td>
-                  <td>{{ post.body }}</td>
-                  <td>{{ post.author }}</td>
-                  <td><router-link :to="{name: 'edit', params: { id: post._id }}" class="btn btn-primary">Edit</router-link></td>
-                  <td><button v-on:click= deletePost(post._id) class="btn btn-danger">Delete</button>
-                  
-                  </td>
-        -->
+              <tr v-for="team in teams" :key="team._id">
+                <td>{{ team.title }}</td>
+                <td>{{ team.body }}</td>
+                <td>{{ team.author }}</td>
+                <td>
+                  <router-link
+                    :to="{ name: 'editTeams', params: { id: team._id } }"
+                    class="btn btn-primary"
+                    >Edit</router-link
+                  >
+                </td>
+                <td>
+                  <button
+                    v-on:click="deletePost(team._id)"
+                    class="btn btn-danger"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
             </tbody>
-         </table>          
+          </table>
         </div>
-     </div>
-   </div>
- </div>
- </template>
+      </div>
+    </div>
+  </div>
+</template>
  <script>
-export default {};
+export default {
+  data() {
+        return {
+          teams: []
+        }
+      },
+      
+    methods: {
+    deleteTeam(id)
+   {
+    let uri = `//localhost:5000/teams/delete/${id}`;
+    this.axios.delete(uri).then(response => {
+     this.teams = this.teams.filter((r) => (r._id != id));
+     console.log(response.data);
+    });
+   }
+  },
+  created() {
+      let uri = 'http://localhost:5000/teams';
+      this.axios.get(uri).then(response => {
+        this.teams = response.data;
+      });
+    }
+};
 </script>

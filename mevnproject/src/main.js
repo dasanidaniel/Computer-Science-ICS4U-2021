@@ -28,7 +28,7 @@ const routes = [
     component: HomeComponent
   },
   {
-      name: 'Teams',
+      name: 'teams',
       path: '/teams',
       component: Teams
   },
