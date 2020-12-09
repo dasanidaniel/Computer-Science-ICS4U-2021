@@ -2,10 +2,10 @@
  <div >
    <div >
      <div >
-       <div >New Game</div>
+       <div >Stats</div>
 
        <div >
-         This is where new games will be inputted.
+         This is where a table with overall statistics will be placed.
        </div>
      </div>
    </div>
