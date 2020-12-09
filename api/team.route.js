@@ -18,12 +18,12 @@ teamRoutes.route('/add').post(function (req, res) {
 
 // Defined get data(index or listing) route
 teamRoutes.route('/teams').get(function (req, res) {
-    Team.find(function(err, posts){
+    Team.find(function(err, teams){
     if(err){
       res.json(err);
     }
     else {
-      res.json(posts);
+      res.json(teams);
     }
   });
 });

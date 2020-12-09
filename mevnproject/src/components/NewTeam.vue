@@ -30,7 +30,7 @@ export default {
   methods: {
     addTeam() {
       let uri = '//localhost:5000/teams/add';
-    this.axios.post(uri, this.post).then(() => {
+    this.axios.post(uri, this.team).then(() => {
        this.$router.push({name: 'teams'});
     });
     },
