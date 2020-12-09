@@ -29,7 +29,10 @@ export default {
   },
   methods: {
     addTeam() {
-      console.log(this.team);
+      let uri = '//localhost:5000/teams/add';
+    this.axios.post(uri, this.post).then(() => {
+       this.$router.push({name: 'teams'});
+    });
     },
   },
 };

@@ -7,19 +7,30 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+
+Vue.use(VueAxios, axios);
+
 Vue.config.productionTip = false
 
 import NewGame from './components/NewGame.vue';
 import NewTeam from './components/NewTeam.vue';
-import Stats from './components/Stats.vue';
+import Teams from './components/Teams.vue';
 import UpdateTeam from './components/UpdateTeam.vue';
 import TeamBreakdown from './components/TeamBreakdown.vue';
+import HomeComponent from './components/HomeComponent.vue';
 
 const routes = [
   {
-      name: 'Stats',
-      path: '/',
-      component: Stats
+    name: 'Home',
+    path: '/',
+    component: HomeComponent
+  },
+  {
+      name: 'Teams',
+      path: '/teams',
+      component: Teams
   },
   {
       name: 'newTeam',

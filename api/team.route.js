@@ -2,7 +2,7 @@ const express = require('express');
 const teamRoutes = express.Router();
 
 // Require Post model in our routes module
-let Team = require('./post.model');
+let Team = require('./team.model');
 
 // Defined store route
 teamRoutes.route('/add').post(function (req, res) {
@@ -17,7 +17,7 @@ teamRoutes.route('/add').post(function (req, res) {
 });
 
 // Defined get data(index or listing) route
-postRoutes.route('/').get(function (req, res) {
+teamRoutes.route('/teams').get(function (req, res) {
     Team.find(function(err, posts){
     if(err){
       res.json(err);
@@ -31,22 +31,21 @@ postRoutes.route('/').get(function (req, res) {
 // Defined edit route
 teamRoutes.route('/edit/:id').get(function (req, res) {
   let id = req.params.id;
-  Team.findById(id, function (err, post){
+  Team.findById(id, function (err, team){
       if(err) {
         res.json(err);
       }
-      res.json(post);
+      res.json(team);
   });
 });
 
 //  Defined update route
 teamRoutes.route('/update/:id').post(function (req, res) {
-    Team.findById(req.params.id, function(err, post) {
-    if (!post)
+    Team.findById(req.params.id, function(err, team) {
+    if (!team)
       res.status(404).send("data is not found");
     else {
-        team.title = req.body.title;
-        team.body = req.body.body;
+        team.name = req.body.name;
         team.save().then(() => {
           res.json('Update complete');
       })
@@ -65,4 +64,4 @@ teamRoutes.route('/delete/:id').delete(function (req, res) {
     });
 });
 
-module.exports = postRoutes;
+module.exports = teamRoutes;
