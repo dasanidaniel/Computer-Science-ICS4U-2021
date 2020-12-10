@@ -50,7 +50,7 @@
                 </td>
                 <td>
                   <button
-                    v-on:click="deletePost(team._id)"
+                    v-on:click="deleteTeam(team._id)"
                     class="btn btn-danger"
                   >
                     Delete

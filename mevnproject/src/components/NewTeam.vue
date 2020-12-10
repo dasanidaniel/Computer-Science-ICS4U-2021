@@ -5,10 +5,10 @@
     </div>
     <form @submit.prevent="addTeam">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6"> 
           <div class="form-group">
             <label>Team Name:</label>
-            <input type="text" class="form-control" v-model="team.name" />
+            <input type="text" class="form-control" v-model="team.name" placeholder="Name"  />
           </div>
         </div>
       </div>
