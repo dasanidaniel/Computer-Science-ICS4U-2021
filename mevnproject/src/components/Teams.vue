@@ -28,12 +28,11 @@
 
             <tbody>
               <tr v-for="team in teams" :key="team._id">
-                <td>{{ team.title }}</td>
-                <td>{{ team.body }}</td>
-                <td>{{ team.author }}</td>
+                <td>{{ team.name }}</td>
+                
                 <td>
                   <router-link
-                    :to="{ name: 'editTeams', params: { id: team._id } }"
+                    :to="{ name: 'editTeam', params: { id: team._id } }"
                     class="btn btn-primary"
                     >Edit</router-link
                   >
@@ -73,7 +72,7 @@ export default {
    }
   },
   created() {
-      let uri = 'http://localhost:5000/teams';
+      let uri = 'http://localhost:5000/teams/teams';
       this.axios.get(uri).then(response => {
         this.teams = response.data;
       });
