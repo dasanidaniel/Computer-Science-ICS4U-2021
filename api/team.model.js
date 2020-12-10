@@ -5,49 +5,42 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
 let Team = new Schema({
-  title: {
+  name: {
     type: String
   },
   win: {
-    type: Number
+    type: Number, default: 0
   },
   loss: {
-      type: Number
+      type: Number, default: 0
   },
   PCT: {
-    type: Number
+    type: Number, default: 0
   },
   GB: {
-    type: Number
+    type: Number, default: 0
   },
-  home: {
-    win: {Number},
-    loss: {Number},
-  },
-  away: {
-    win: {type:Number},
-    loss: {type:Number}
-  },
+  
   divRecord: {
-    win: {type:Number},
-    loss: {type:Number}
+    win: {type:Number, default: 0},
+    loss: {type:Number, default: 0}
   },
   confRecord: {
-    win: {type:Number},
-    loss: {type:Number}
+    win: {type:Number, default: 0},
+    loss: {type:Number, default: 0}
   },
   PPG: {
-    type:Number
+    type:Number, default: 0
+  },
+  oppPPG: {
+    type: Number, default:0
   },
   avgDiff: {
-    type:Number
+    type:Number, default: 0
   },
-  streak: {
-      type: String
-  },
+
   last10: {
-      win: {type: Number},
-      loss: {type: Number}
+      type: String, default: "W0"
   }
 
 },{

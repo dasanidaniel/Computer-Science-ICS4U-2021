@@ -14,21 +14,32 @@
                 <th>L</th>
                 <th>W/L</th>
                 <th>GB</th>
-                <th>HOME</th>
-                <th>AWAY</th>
                 <th>DIV</th>
                 <th>CONF</th>
                 <th>PPG</th>
                 <th>OPP PPG</th>
                 <th>DIFF</th>
-                <th>STRK</th>
+
                 <th>L10</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
               </tr>
             </thead>
 
             <tbody>
               <tr v-for="team in teams" :key="team._id">
                 <td>{{ team.name }}</td>
+                <td>{{ team.win }}</td>
+                <td>{{ team.loss }}</td>
+                <td>{{ team.PCT }}</td>
+                <td>{{ team.GB }}</td>
+                <td>{{ team.divRecord.win }}-{{team.divRecord.loss}}</td>
+                <td>{{ team.confRecord.win }}-{{team.confRecord.loss }}</td>
+                <td>{{ team.PPG }}</td>
+                <td>{{ team.oppPPG }}</td>
+                <td>{{ team.avgDiff }}</td>
+                <td>{{ team.last10 }}</td>
+                
                 
                 <td>
                   <router-link
