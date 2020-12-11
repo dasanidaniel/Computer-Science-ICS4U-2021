@@ -92,20 +92,3 @@
     </form>
   </div>
 </template>
- <script>
-export default {
-  data() {
-    return {
-      game: {},
-    };
-  },
-  methods: {
-    addGame() {
-      let uri = "http://localhost:5000/games/add";
-      this.axios.post(uri, this.game).then(() => {
-        this.$router.push({ name: "gamePage" });
-      });
-    },
-  },
-};
-</script>

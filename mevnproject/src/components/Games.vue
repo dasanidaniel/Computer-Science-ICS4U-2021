@@ -12,24 +12,26 @@
                 <th>Games</th>
                 <th>Edit</th>
                 <th>Delete</th>
-                
               </tr>
             </thead>
 
             <tbody>
               <tr v-for="game in games" :key="game._id">
-                <td>{{ game.teamOne }}   {{ game.teamOneScore }} - {{ game.teamTwoScore }}   {{ game.teamTwo }} </td>
+                <td>
+                  <label>{{ game.homeTeam }}</label> {{ game.homeScore }} -
+                  {{ game.awayScore }} <label>{{ game.awayTeam }}</label>
+                </td>
 
                 <td>
                   <router-link
-                    :to="{ name: 'editTeam', params: { id: team._id } }"
+                    :to="{ name: 'editGame', params: { id: game._id } }"
                     class="btn btn-primary"
                     >Edit</router-link
                   >
                 </td>
                 <td>
                   <button
-                    v-on:click="deleteTeam(team._id)"
+                    v-on:click="deleteGame(game._id)"
                     class="btn btn-danger"
                   >
                     Delete
@@ -47,23 +49,23 @@
 export default {
   data() {
     return {
-      teams: [],
+      games: [],
     };
   },
 
   methods: {
-    deleteTeam(id) {
+    deleteGame(id) {
       let uri = `//localhost:5000/games/delete/${id}`;
       this.axios.delete(uri).then((response) => {
-        this.teams = this.teams.filter((r) => r._id != id);
+        this.games = this.games.filter((r) => r._id != id);
         console.log(response.data);
       });
     },
   },
   created() {
-    let uri = "http://localhost:5000/games";
+    let uri = "http://localhost:5000/games/games";
     this.axios.get(uri).then((response) => {
-      this.teams = response.data;
+      this.games = response.data;
     });
   },
 };

@@ -10,6 +10,9 @@
      <router-link class="nav-link" to="/teams" >Teams</router-link>
     </li>
     <li class="nav-item">
+     <router-link class="nav-link" to="/games" >Games</router-link>
+    </li>
+    <li class="nav-item">
      <router-link class="nav-link" to="/newTeam" >Add Team</router-link>
     </li>
     <li class="nav-item">
@@ -18,6 +21,8 @@
     <li class="nav-item">
      <router-link class="nav-link" to="/teamBreakdown" >Team Breakdown</router-link>
     </li>
+    
+
    </ul>
   </nav><br />
   <transition name=fade>
