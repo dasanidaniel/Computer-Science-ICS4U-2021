@@ -3,11 +3,13 @@ const gameRoutes = express.Router();
 
 // Require Post model in our routes module
 let Game = require('./game.model');
+const { route } = require('./team.route');
 
 // Defined store route
 gameRoutes.route('/add').post(function (req, res) {
+    console.log(route);
   let Game = new Game(req.body);
-  game.save()
+  Game.save()
     .then(() => {
       res.status(200).json({'game': 'game added successfully'});
     })

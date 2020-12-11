@@ -25,11 +25,11 @@
             <tr><td>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Team One:</label>
+                  <label>Home Team:</label>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="game.teamOne"
+                    v-model="game.homeTeam"
                     placeholder="Team One"
                   />
                 </div>
@@ -39,11 +39,11 @@
             <td>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Team Two:</label>
+                  <label>Away Team:</label>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="game.teamTwo"
+                    v-model="game.awayTeam"
                     placeholder="Team Two"
                   />
                 </div>
@@ -58,7 +58,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="game.teamOneScore"
+                    v-model="game.homeScore"
                     placeholder="Score"
                   />
                 </div>
@@ -72,7 +72,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="game.teamTwoScore"
+                    v-model="game.awayScore"
                     placeholder="Score"
                   />
                 </div>

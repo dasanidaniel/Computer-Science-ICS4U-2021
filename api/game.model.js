@@ -8,16 +8,16 @@ let Game = new Schema({
   date: {
     type: String
   },
-  teamOne: {
+  homeTeam: {
     type: String, default: "empty"
   },
-  teamOneScore: {
+  homeScore: {
       type: Number, default: 0
   },
-  teamTwo: {
+  awayTeam: {
       type: String, default: "empty"
   },
-  teamTwoScore: {
+  awayScore: {
       type: Number, default: 0
   }
 
