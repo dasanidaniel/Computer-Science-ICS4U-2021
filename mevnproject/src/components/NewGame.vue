@@ -54,7 +54,7 @@
                   <div class="form-group">
                     <label>Score:</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       v-model="game.homeScore"
                       placeholder="Score"
@@ -69,7 +69,7 @@
                   <div class="form-group">
                     <label>Score:</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       v-model="game.awayScore"
                       placeholder="Score"
@@ -95,8 +95,14 @@ export default {
   data() {
     return {
       game: {},
-      team: {},
+      teams: [],
     };
+  },
+  created() {
+    let uri = "http://localhost:5000/teams/teams";
+    this.axios.get(uri).then((response) => {
+      this.teams = response.data;
+    });
   },
   methods: {
     addGame() {
