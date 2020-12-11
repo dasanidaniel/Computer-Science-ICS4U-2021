@@ -21,6 +21,7 @@ import UpdateTeam from './components/UpdateTeam.vue';
 import TeamBreakdown from './components/TeamBreakdown.vue';
 import HomeComponent from './components/HomeComponent.vue';
 import Games from './components/Games.vue';
+import UpdateGame from './components/UpdateGame.vue'
 
 const routes = [
   {
@@ -57,6 +58,11 @@ const routes = [
     name: 'gamePage',
     path: '/games',
     component: Games
+  },
+  {
+    name: 'editGame',
+    path:'/editGame',
+    component: UpdateGame
   }
 ];
 

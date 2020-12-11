@@ -48,7 +48,11 @@ gameRoutes.route('/update/:id').post(function (req, res) {
     if (!game)
       res.status(404).send("data is not found");
     else {
-        game.name = req.body.name;
+        game.date = req.body.date;
+        game.homeTeam = req.body.homeTeam;
+        game.homeScore = req.body.homeScore;
+        game.awayTeam = req.body.teamScore;
+        game.awayScore = req.body.awayScore;    
         game.save().then(() => {
           res.json('Update complete');
       })

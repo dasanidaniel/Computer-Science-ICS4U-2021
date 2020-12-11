@@ -10,6 +10,7 @@
             <thead>
               <tr>
                 <th>Games</th>
+                <th>Date</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -18,9 +19,10 @@
             <tbody>
               <tr v-for="game in games" :key="game._id">
                 <td>
-                  <label>{{ game.homeTeam }}</label> {{ game.homeScore }} -
-                  {{ game.awayScore }} <label>{{ game.awayTeam }}</label>
+                  <b>{{ game.homeTeam }}</b> {{ game.homeScore }} -
+                  {{ game.awayScore }} <b>{{ game.awayTeam }}</b>
                 </td>
+                <td>{{ game.date }}</td>
 
                 <td>
                   <router-link

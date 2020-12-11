@@ -1,9 +1,9 @@
  <template>
   <div>
     <div>
-      <h1>New Game</h1>
+      <h1>Edit Game</h1>
     </div>
-    <form @submit.prevent="addGame">
+    <form @submit.prevent="updateGame">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -22,64 +22,65 @@
           <thead></thead>
 
           <tbody>
-            <tr><td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Home Team:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.homeTeam"
-                    placeholder="Team One"
-                  />
+            <tr>
+              <td>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Home Team:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.homeTeam"
+                      placeholder="Team One"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
-            
-            <td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Away Team:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.awayTeam"
-                    placeholder="Team Two"
-                  />
+              </td>
+
+              <td>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Away Team:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.awayTeam"
+                      placeholder="Team Two"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
             </tr>
             <tr>
               <td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Score:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.homeScore"
-                    placeholder="Score"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                  />
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Score:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.homeScore"
+                      placeholder="Score"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
-            
-            <td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Score:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.awayScore"
-                    placeholder="Score"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                  />
+              </td>
+
+              <td>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Score:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.awayScore"
+                      placeholder="Score"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -87,8 +88,28 @@
 
       <br />
       <div class="form-group">
-        <button class="btn btn-primary">Create</button>
+        <button class="btn btn-primary">Update</button>
       </div>
     </form>
   </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            game: {}
+        }
+    },
+    
+    methods: {
+        updateGame() {
+            let url = `http://localhost:5000/games/update/${this.$route.params.id}`;
+            this.axios.post(url, this.game).then(() => {
+                this.$router.push({name : 'gamePage'});
+            }
+        )}
+    
+        }
+    }
+
+</script>
