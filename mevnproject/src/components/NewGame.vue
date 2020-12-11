@@ -22,64 +22,62 @@
           <thead></thead>
 
           <tbody>
-            <tr><td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Home Team:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.homeTeam"
-                    placeholder="Team One"
-                  />
+            <tr>
+              <td>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Home Team:</label>
+                    <select class="form-control form-control-lg" v-model="game.homeTeam">
+                      <option v-for="team in teams" :key="team._id">{{ this.team.name }}</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-            </td>
-            
-            <td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Away Team:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.awayTeam"
-                    placeholder="Team Two"
-                  />
+              </td>
+
+              <td>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Away Team:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.awayTeam"
+                      placeholder="Team Two"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
             </tr>
             <tr>
               <td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Score:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.homeScore"
-                    placeholder="Score"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                  />
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Score:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.homeScore"
+                      placeholder="Score"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
-            
-            <td>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Score:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="game.awayScore"
-                    placeholder="Score"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                  />
+              </td>
+
+              <td>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Score:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="game.awayScore"
+                      placeholder="Score"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -97,6 +95,7 @@ export default {
   data() {
     return {
       game: {},
+      team: {},
     };
   },
   methods: {
