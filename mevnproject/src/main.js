@@ -20,6 +20,7 @@ import Teams from './components/Teams.vue';
 import UpdateTeam from './components/UpdateTeam.vue';
 import TeamBreakdown from './components/TeamBreakdown.vue';
 import HomeComponent from './components/HomeComponent.vue';
+import Games from './components/Games.vue';
 
 const routes = [
   {
@@ -39,7 +40,7 @@ const routes = [
   },
   {
       name: 'editTeam',
-      path: '/edit/:id',
+      path: '/editTeam/:id',
       component: UpdateTeam
   },
   {
@@ -51,6 +52,11 @@ const routes = [
     name:'teamBreakdown',
     path: '/teamBreakdown',
     component: TeamBreakdown
+  },
+  {
+    name: 'gamePage',
+    path: '/games',
+    component: Games
   }
 ];
 

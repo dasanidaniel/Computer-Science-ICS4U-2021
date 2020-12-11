@@ -32,7 +32,7 @@ export default {
 
       methods: {
         updateTeam() {
-          let uri = `http://localhost:5000/teams/update/${this.$route.params.id}`;
+          let uri = `http://localhost:5000/teams/updateTeam/${this.$route.params.id}`;
           this.axios.post(uri, this.team).then(() => {
             this.$router.push({name: 'teams'});
           });

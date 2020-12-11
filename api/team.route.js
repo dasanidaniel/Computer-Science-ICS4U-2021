@@ -29,7 +29,7 @@ teamRoutes.route('/teams').get(function (req, res) {
 });
 
 // Defined edit route
-teamRoutes.route('/edit/:id').get(function (req, res) {
+teamRoutes.route('/editTeam/:id').get(function (req, res) {
   let id = req.params.id;
   Team.findById(id, function (err, team){
       if(err) {
@@ -40,7 +40,7 @@ teamRoutes.route('/edit/:id').get(function (req, res) {
 });
 
 //  Defined update route
-teamRoutes.route('/update/:id').post(function (req, res) {
+teamRoutes.route('/updateTeam/:id').post(function (req, res) {
     Team.findById(req.params.id, function(err, team) {
     if (!team)
       res.status(404).send("data is not found");
