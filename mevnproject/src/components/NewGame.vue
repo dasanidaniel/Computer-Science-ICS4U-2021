@@ -8,12 +8,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Date:</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="game.date"
-              placeholder="Date"
-            />
+            <input type="date" class="form-control" v-model="game.date" />
           </div>
         </div>
       </div>
@@ -27,8 +22,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Home Team:</label>
-                    <select class="form-control form-control-lg" v-model="game.homeTeam">
-                      <option v-for="team in teams" :key="team._id">{{ this.team.name }}</option>
+                    <select
+                      class="form-control form-control-lg"
+                      v-model="game.homeTeam"
+                    >
+                      <option v-for="team in teams" :key="team._id">
+                        {{ team.name }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -38,12 +38,14 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Away Team:</label>
-                    <input
-                      type="text"
-                      class="form-control"
+                    <select
+                      class="form-control form-control-lg"
                       v-model="game.awayTeam"
-                      placeholder="Team Two"
-                    />
+                    >
+                      <option v-for="team in teams" :key="team._id">
+                        {{ team.name }}
+                      </option>
+                    </select>
                   </div>
                 </div>
               </td>
@@ -56,9 +58,10 @@
                     <input
                       type="number"
                       class="form-control"
+                      style="height: 40px"
                       v-model="game.homeScore"
                       placeholder="Score"
-                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
                     />
                   </div>
                 </div>
@@ -73,7 +76,7 @@
                       class="form-control"
                       v-model="game.awayScore"
                       placeholder="Score"
-                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
                     />
                   </div>
                 </div>
@@ -107,9 +110,13 @@ export default {
   methods: {
     addGame() {
       let uri = "http://localhost:5000/games/add";
-      this.axios.post(uri, this.game).then(() => {
-        this.$router.push({ name: "gamePage" });
-      });
+      let url = `http://localhost:5000/games/updateTeams`;
+      this.axios
+        .post(uri, this.game)
+        .then(this.axios.post(url, this.game))
+        .then(() => {
+          this.$router.push({ name: "gamePage" });
+        });
     },
   },
 };

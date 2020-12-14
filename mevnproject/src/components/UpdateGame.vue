@@ -9,10 +9,9 @@
           <div class="form-group">
             <label>Date:</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
               v-model="game.date"
-              placeholder="Date"
             />
           </div>
         </div>
@@ -27,12 +26,9 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Home Team:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="game.homeTeam"
-                      placeholder="Team One"
-                    />
+                    <select class="form-control form-control-lg" v-model="game.homeTeam">
+                      <option v-for="team in teams" :key="team._id">{{ team.name }}</option>
+                    </select>
                   </div>
                 </div>
               </td>
@@ -41,12 +37,9 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Away Team:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="game.awayTeam"
-                      placeholder="Team Two"
-                    />
+                    <select class="form-control form-control-lg" v-model="game.awayTeam">
+                      <option v-for="team in teams" :key="team._id">{{ team.name }}</option>
+                    </select>
                   </div>
                 </div>
               </td>
@@ -97,10 +90,16 @@
 export default {
     data() {
         return {
-            game: {}
+            game: {},
+            teams: []
         }
     },
-    
+    created() {
+      let uri = "http://localhost:5000/teams/teams";
+    this.axios.get(uri).then((response) => {
+      this.teams = response.data;
+    });
+    },
     methods: {
         updateGame() {
             let url = `http://localhost:5000/games/update/${this.$route.params.id}`;
