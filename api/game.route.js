@@ -86,9 +86,7 @@ gameRoutes.route('/games').get(function (req, res) {
     }
     else {
       games.sort((a, b) => a.date > b.date ? 1 : -1);
-      res.json(games);
-      console.log(games);
-    }
+      res.json(games);    }
   });
 });
 
@@ -135,59 +133,6 @@ gameRoutes.route('/delete/:id').delete(function (req, res) {
   });
 });
 
-gameRoutes.route('/updateTeams').put((req, res) => {
-  console.log(1);
-  let winner;
-  let loser;
-  let winScore;
-  let lossScore;
-  if (req.awayScore > req.homeScore) {
-    winner = req.awayTeam;
-    loser = req.homeTeam;
-    winScore = req.awayScore;
-    lossScore = req.homeScore;
-  } else {
-    winner = req.homeTeam;
-    loser = req.awayTeam;
-    lossScore = req.awayScore;
-    winScore = req.homeScore;
-  }
-  
-  Team.find((err, teams) => {
-    console.log(2);
-    if (err) {
-      res.json(err);
-    } else {
-      teams.filter(team => {
-        if (team.name === winner) {
-          console.log("Wbefore : " + team);
-          team.win += 1;
-          team.numGames += 1;
-          team.PPG += winScore;
-          team.oppPPG += lossScore;
-          console.log("Wafter : " + team);
-          team.save().then(() => {
-            res.json("Win Update Complete");
-          }).catch(() => {
-            res.status(400).send("unable to update the database");
-          });
-        } else if (team.name === loser) {
-          console.log("Lbefore : " + team);
-          team.loss += 1;
-          team.numGames += 1;
-          team.PPG += lossScore;
-          team.oppPPG += winScore;
-          console.log("Lafter : " + team);
-          team.save().then(() => {
-            res.json("Loss Update Complete");
-          }).catch(() => {
-            res.status(400).send("unable to update the database");
-          });
-        };
-      });
-    }
-  });
-});
 
 
 module.exports = gameRoutes;
