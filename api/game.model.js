@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 // Define collection and schema for Game
 let Game = new Schema({
   date: {
-    type: String
+    type: Date, String
   },
   homeTeam: {
     type: String, default: "empty"

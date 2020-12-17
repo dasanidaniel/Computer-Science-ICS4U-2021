@@ -29,6 +29,9 @@ let Team = new Schema({
     win: {type:Number, default: 0},
     loss: {type:Number, default: 0}
   },
+  numGames: {
+    type:Number, default: 0
+  },
   PPG: {
     type:Number, default: 0
   },

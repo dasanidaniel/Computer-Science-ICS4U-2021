@@ -35,8 +35,8 @@
                 <td>{{ team.GB }}</td>
                 <td>{{ team.divRecord.win }}-{{ team.divRecord.loss }}</td>
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
-                <td>{{ team.PPG }}</td>
-                <td>{{ team.oppPPG }}</td>
+                <td>{{ team.PPG / team.numGames}}</td>
+                <td>{{ team.oppPPG / team.numGames}}</td>
                 <td>{{ team.avgDiff }}</td>
                 <td>{{ team.last10 }}</td>
 

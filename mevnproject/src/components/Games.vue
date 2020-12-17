@@ -9,7 +9,11 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>Games</th>
+                <th> </th>
+                <th> </th>
+                <th class="text-center">Games</th>
+                <th> </th>
+                <th> </th>
                 <th>Date</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -18,11 +22,14 @@
 
             <tbody>
               <tr v-for="game in games" :key="game._id">
-                <td>
-                  <b>{{ game.homeTeam }}</b> {{ game.homeScore }} -
-                  {{ game.awayScore }} <b>{{ game.awayTeam }}</b>
-                </td>
-                <td>{{ game.date }}</td>
+                
+                <td class="text-right"><b>{{ game.homeTeam }}</b></td>
+                <td class="text-right">{{ game.homeScore }}</td>
+                <td class="text-center"> - </td>
+                <td class="text-left">{{ game.awayScore }}</td>
+                <td class="text-left"> <b>{{ game.awayTeam }}</b> </td>
+                
+                <td>{{ game.date }} </td>
 
                 <td>
                   <router-link
@@ -48,6 +55,9 @@
   </div>
 </template>
  <script>
+ 
+  
+ 
 export default {
   data() {
     return {
@@ -63,6 +73,38 @@ export default {
         console.log(response.data);
       });
     },
+    displayDate(d) {
+
+      let date = "";
+      if (d.getMonth() == 0) {
+        date += "Jan.";
+      } else if (d.getMonth() == 1) {
+        date += "Feb.";
+      } else if (d.getMonth() == 2) {
+        date += "Mar.";
+      } else if (d.getMonth() == 3) {
+        date += "Apr.";
+      } else if (d.getMonth() == 4) {
+        date += "May.";
+      } else if (d.getMonth() == 5) {
+        date += "Jun.";
+      } else if (d.getMonth() == 6) {
+        date += "Jul.";
+      } else if (d.getMonth() == 7) {
+        date += "Aug.";
+      } else if (d.getMonth() == 8) {
+        date += "Sept.";
+      } else if (d.getMonth() == 9) {
+        date += "Oct.";
+      } else if (d.getMonth() == 10) {
+        date += "Nov.";
+      } else {
+        date += "Dec.";
+      }
+      date += " " + d.getDay() + ", " + d.getYear();
+      return date;
+    }
+    
   },
   created() {
     let uri = "http://localhost:5000/games/games";
