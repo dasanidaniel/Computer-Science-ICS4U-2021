@@ -43,7 +43,7 @@ let Team = new Schema({
   },
 
   conference: {
-    type: String, default: "E"
+    type: String, default: "East"
   }
 
 },{
