@@ -2,16 +2,15 @@
   <div class="container">
     <div>
       <div>
-        <div>Games</div>
-
-        <div>This is where a table with overall statistics will be placed.</div>
+        
         <div>
+          <h3 class = "text-center"> Game History </h3>
           <table class="table table-hover">
             <thead class ="thead-dark">
               <tr>
                 <th class="text-right">Home</th>
                 <th> </th>
-                <th class="text-center">Games</th>
+                <th class="text-center"></th>
                 <th> </th>
                 <th>Away</th>
                 <th>Date</th>
@@ -56,7 +55,7 @@
                 
                 <td> </td>
 
-                <td colspan = "1" >
+                <td >
                  <router-link
                     :to="{ name: 'newGame'}"
                     class="btn btn-primary "

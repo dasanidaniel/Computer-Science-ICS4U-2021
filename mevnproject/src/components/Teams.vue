@@ -2,12 +2,12 @@
   <div>
     <div>
       <div>
-        <div>Stats</div>
-
-        <div>This is where a table with overall statistics will be placed.</div>
+       
         <div class="container">
+          <h3 class="text-center">NBA Teams Roster</h3>
           <table class="table table-hover">
             <thead class="thead-dark">
+              
               <tr>
                 <th>Name</th>
                 <th>W</th>
@@ -35,8 +35,8 @@
                 <td>{{ team.GB }}</td>
 
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
-                <td>{{ team.PPG / team.numGames | parseFloat() | toFixed(2)}}</td>
-                <td>{{ team.oppPPG / team.numGames| parseFloat() | toFixed(2)}}</td>
+                <td>{{ team.PPG / team.numGames}}</td>
+                <td>{{ team.oppPPG / team.numGames}}</td>
                 <td>{{ team.avgDiff }}</td>
            
 
@@ -66,16 +66,16 @@
                 <td> </td>
                 <td> </td>
                 <td> </td>
-                <td> </td>
-                <td> </td>
+               
 
-                <td colspan="2">
+                <td>
                   <router-link
                     :to="{ name: 'newTeam'}"
                     class="btn btn-primary"
                     >+ Team</router-link
                   >
                 </td>
+                <td></td>
                 
               </tr>
             </tbody>
