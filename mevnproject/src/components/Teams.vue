@@ -3,7 +3,7 @@
     <div>
       <div>
        
-        <div class="container">
+        <div class="container-fluid">
           <h3 class="text-center">NBA Teams Roster</h3>
           <table class="table table-hover">
             <thead class="thead-dark">
@@ -31,13 +31,13 @@
                 <td>{{ team.name }}</td>
                 <td>{{ team.win }}</td>
                 <td>{{ team.loss }}</td>
-                <td>{{ team.PCT }}</td>
+                <td>{{ calculate(team.win / team.loss) }}</td>
                 <td>{{ team.GB }}</td>
 
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
-                <td>{{ team.PPG / team.numGames}}</td>
-                <td>{{ team.oppPPG / team.numGames}}</td>
-                <td>{{ team.avgDiff }}</td>
+                <td>{{ calculate(team.PPG / team.numGames)}}</td>
+                <td>{{ calculate(team.oppPPG / team.numGames) }}</td>
+                <td>{{ calculate(team.avgDiff) }}</td>
            
 
                 <td>
@@ -94,6 +94,9 @@ export default {
   },
  
   methods: {
+    calculate(number) {
+      return number.toFixed(1);
+    },
     deleteTeam(id) {
       let uri = `//localhost:5000/teams/delete/${id}`;
       this.axios.delete(uri).then((response) => {

@@ -1,5 +1,5 @@
  <template>
-  <div>
+  <div class="container-fluid">
     <div>
       <h1>New Game</h1>
     </div>
@@ -9,6 +9,7 @@
           <div class="form-group">
             <label>Date:</label>
             <input type="date" class="form-control" v-model="game.date" />
+            <p v-if="!dateIsValid" class="error-message">Date field is required</p>
           </div>
         </div>
       </div>
@@ -30,6 +31,7 @@
                         {{ team.name }}
                       </option>
                     </select>
+                    <p v-if="!homeIsValid" class="error-message">Team is required</p>
                   </div>
                 </div>
               </td>
@@ -46,6 +48,7 @@
                         {{ team.name }}
                       </option>
                     </select>
+                    <p v-if="!awayIsValid" class="error-message">Team is required</p>
                   </div>
                 </div>
               </td>
@@ -59,10 +62,11 @@
                       type="number"
                       class="form-control"
                       style="height: 40px"
-                      v-model="game.homeScore"
+                      v-model.number="game.homeScore"
                       placeholder="Score"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
                     />
+                    <p v-if="!homeScoreIsValid" class="error-message">Score is required</p>
                   </div>
                 </div>
               </td>
@@ -74,10 +78,11 @@
                     <input
                       type="number"
                       class="form-control"
-                      v-model="game.awayScore"
+                      v-model.number="game.awayScore"
                       placeholder="Score"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
                     />
+                    <p v-if="!awayScoreIsValid" class="error-message">Score is required</p>
                   </div>
                 </div>
               </td>
@@ -89,6 +94,7 @@
       <br />
       <div class="form-group">
         <button class="btn btn-primary">Create</button>
+        <button v-on:click="cancel" class="btn btn-danger">Cancel</button>
       </div>
     </form>
   </div>
@@ -107,14 +113,43 @@ export default {
       this.teams = response.data;
     });
   },
-  methods: {
-    addGame() {
-      let uri = "http://localhost:5000/games/add";
-   
-      this.axios.post(uri, this.game)
+  computed: {
+    dateIsValid() {
+      return !!this.game.date;
+    },
+    awayIsValid() {
       
+      return !!this.game.awayTeam;
+    },
+    homeIsValid() {
+      
+      return !!this.game.homeTeam;
+    },
+    homeScoreIsValid() {
+      return !!this.game.homeScore;
+    },
+    awayScoreIsValid() {
+      return !!this.game.awayScore;
+    }
+  },
+  methods: {
+     cancel() {
+          this.$router.push({name: 'gamePage'});
+        },
+    addGame() {
+     let gameIsValid = this.dateIsValid && this.awayIsValid && this.homeIsValid && this.awayScoreIsValid && this.homeScoreIsValid;
+     console.log(gameIsValid);
+     if (gameIsValid) {
+      let uri = "http://localhost:5000/games/add";
+      this.axios.post(uri, this.game)
       .then(this.$router.push({name: "gamePage"}));
+     } else {
+       alert("Missing Information");
+     }
     }
   }
 };
 </script>
+<style>
+
+</style>

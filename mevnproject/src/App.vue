@@ -58,5 +58,7 @@ export default {
   background: grey;
   color: white;
 }
-
+.error-message {
+  color: red;
+}
 </style>

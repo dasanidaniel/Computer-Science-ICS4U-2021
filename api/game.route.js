@@ -5,12 +5,34 @@ const gameRoutes = express.Router();
 let Game = require('./game.model');
 let Team = require('./team.model');
 // const { route } = require('./team.route');
+function updateConf(win, loss, res) {
+  win.confRecord.win += 1;
+  loss.confRecord.loss += 1;
+  win.save().catch(() => {
+    res.status(400).send("unable to update the database");
+  });
+  loss.save().catch(() => {
+    res.status(400).send("unable to update the database");
+  });
+}
+
+function undoUpdateConf(win, loss, res) {
+  win.confRecord.win -= 1;
+  loss.confRecord.loss -= 1;
+  win.save().catch(() => {
+    res.status(400).send("unable to update the database");
+  });
+  loss.save().catch(() => {
+    res.status(400).send("unable to update the database");
+  });
+}
 
 function getData(req, res) {
   let winner;
   let loser;
   let winScore;
   let lossScore;
+  
   
   if (req.body.awayScore > req.body.homeScore) {
     winner = req.body.awayTeam;
@@ -24,48 +46,52 @@ function getData(req, res) {
     winScore = req.body.homeScore;
   }
   Team.find((err, teams) => {
-    
     if (err) {
       console.log("The error is: " + err);
       res.json(err);
     } else {
-      console.log("the winner is: " + winner);
+      
       teams.forEach(team => {
-        console.log(team.name);
+     
         if (team.name === winner) {
           
           team.win += 1;
           team.numGames += 1;
           team.PPG = parseInt(team.PPG, 10) + parseInt(winScore, 10);
           team.oppPPG = parseInt(team.oppPPG, 10) + parseInt(lossScore, 10);
-          team.avgDiff += (team.PPG - team.oppPPG) / numGames;
+          team.avgDiff += (team.PPG - team.oppPPG) / team.numGames;
           console.log("Winning Team: " + team);
+          winner = team;
           team.save().catch(() => {
             res.status(400).send("unable to update the database");
           });
         } else if (team.name === loser) {
+          
           team.loss += 1;
           team.numGames += 1;
           team.PPG = parseInt(team.PPG, 10) + parseInt(winScore, 10);
           team.oppPPG = parseInt(team.oppPPG, 10) + parseInt(lossScore, 10);
-          team.avgDiff += (team.PPG - team.oppPPG) / numGames;
+          team.avgDiff += (team.PPG - team.oppPPG) / team.numGames;
           console.log("Losing Team : " + team);
+          loser = team;
           team.save().catch(() => {
             res.status(400).send("unable to update the database");
           });
         };
       });
-
+      if (winner.conference === loser.conference) {
+        updateConf(winner, loser, res);
+      }
       console.log("Teams updated");
-  
+      
     }
   });
 }
 // Defined store route
 gameRoutes.route('/add').post(function (req, res) {
   let game = new Game(req.body);
-  game.homeScore = Number(game.homeScore);
-  game.awayScore = Number(game.awayScore);
+  game.homeScore = parseInt(game.homeScore.toFixed(0));
+  game.awayScore = parseInt(game.awayScore.toFixed(0));
   console.log(game);
   game.save()
     .then(() => {
@@ -102,21 +128,21 @@ gameRoutes.route('/edit/:id').get(function (req, res) {
   });
 });
 
-function undoTeamUpdate(req, res) {
+function undoTeamUpdate(game, res) {
   let winner;
   let loser;
   let winScore;
   let lossScore;
-  if (req.awayScore > req.homeScore) {
-    winner = req.body.awayTeam;
-    loser = req.body.homeTeam;
-    winScore = req.body.awayScore;
-    lossScore = req.body.homeScore;
+  if (game.awayScore > game.homeScore) {
+    winner = game.awayTeam;
+    loser = game.homeTeam;
+    winScore = game.awayScore;
+    lossScore = game.homeScore;
   } else {
-    winner = req.body.homeTeam;
-    loser = req.body.awayTeam;
-    lossScore = req.body.awayScore;
-    winScore = req.body.homeScore;
+    winner = game.homeTeam;
+    loser = game.awayTeam;
+    lossScore = game.awayScore;
+    winScore = game.homeScore;
   }
   Team.find((err, teams) => {
     
@@ -137,17 +163,23 @@ function undoTeamUpdate(req, res) {
           team.save().catch(() => {
             res.status(400).send("unable to update the database");
           });
+          winner = team;
         } else if (team.name === loser) {
           team.loss -= 1;
           team.numGames -= 1;
-          team.PPG -= Integer.parseInt(lossScore);
-          team.oppPPG -= Integer.parseInt(winScore);
+          team.PPG -= parseInt(lossScore);
+          team.oppPPG -= parseInt(winScore);
           console.log("Undo L Team : " + team);
           team.save().catch(() => {
             res.status(400).send("unable to update the database");
           });
+          loser = team;
         };
       });
+      // removes incorrect statistics of conference losing team and winning team
+      if (loser.conference === winner.conference) {
+        undoUpdateConf(winner, loser, res);
+      }
 
       console.log("Undo Teams updated");
   
@@ -161,8 +193,8 @@ gameRoutes.route('/update/:id').post(function (req, res) {
     if (!game)
       res.status(404).send("data is not found");
     else {
-      let original = req.body;
-      undoTeamUpdate(original, res);
+     
+      undoTeamUpdate(game, res);
       game.date = req.body.date;
       game.homeTeam = req.body.homeTeam;
       game.homeScore = req.body.homeScore;

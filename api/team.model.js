@@ -14,9 +14,7 @@ let Team = new Schema({
   loss: {
       type: Number, default: 0
   },
-  PCT: {
-    type: Number, default: 0
-  },
+ 
   GB: {
     type: Number, default: 0
   },

@@ -9,6 +9,7 @@
           <table class="table table-hover">
             <thead class="thead-dark">
               <tr>
+                <th>Position</th>
                 <th>Name</th>
                 <th>W</th>
                 <th>L</th>
@@ -21,40 +22,24 @@
                 <th>DIFF</th>
 
               
-                <th>EDIT</th>
-                <th>DELETE</th>
+              
               </tr>
             </thead>
 
             <tbody class="bg-light">
-              <tr v-for="team in eTeams" :key="team._id">
+              <tr v-for="(team, index) in eTeams" :key="team._id">
+                <td>{{ doMath(index)}}</td>
                 <td>{{ team.name }}</td>
                 <td>{{ team.win }}</td>
                 <td>{{ team.loss }}</td>
-                <td>{{ team.PCT }}</td>
+                <td>{{ calculate(team.win / team.loss) }}</td>
                 <td>{{ team.GB }}</td>
               
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
-                <td>{{ team.PPG / team.numGames }}</td>
-                <td>{{ team.oppPPG / team.numGames}}</td>
-                <td>{{ team.avgDiff }}</td>
-           
-
-                <td>
-                  <router-link
-                    :to="{ name: 'editTeam', params: { id: team._id } }"
-                    class="btn btn-primary"
-                    >Edit</router-link
-                  >
-                </td>
-                <td>
-                  <button
-                    v-on:click="deleteTeam(team._id)"
-                    class="btn btn-danger"
-                  >
-                    Delete
-                  </button>
-                </td>
+                <td>{{ calculate(team.PPG / team.numGames) }}</td>
+                <td>{{ calculate(team.oppPPG / team.numGames)}}</td>
+                <td>{{ calculate(team.avgDiff) }}</td>
+               
               </tr>
               
             </tbody>
@@ -66,6 +51,7 @@
           <table class="table table-hover">
             <thead class="thead-dark">
               <tr>
+                <th>Position</th>
                 <th>Name</th>
                 <th>W</th>
                 <th>L</th>
@@ -78,40 +64,26 @@
                 <th>DIFF</th>
 
               
-                <th>EDIT</th>
-                <th>DELETE</th>
+                
               </tr>
             </thead>
 
             <tbody class="bg-light">
-              <tr v-for="team in wTeams" :key="team._id">
+              <tr v-for="(team,index) in wTeams" :key="team._id">
+                <td>{{ doMath(index) }}
                 <td>{{ team.name }}</td>
                 <td>{{ team.win }}</td>
                 <td>{{ team.loss }}</td>
-                <td>{{ team.PCT }}</td>
+                <td>{{ calculate(team.win / team.loss) }}</td>
                 <td>{{ team.GB }}</td>
               
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
-                <td>{{ team.PPG / team.numGames}}</td>
-                <td>{{ team.oppPPG / team.numGames}}</td>
-                <td>{{ team.avgDiff }}</td>
+                <td>{{ calculate(team.PPG / team.numGames)}}</td>
+                <td>{{ calculate(team.oppPPG / team.numGames)}}</td>
+                <td>{{ calculate(team.avgDiff) }}</td>
            
 
-                <td>
-                  <router-link
-                    :to="{ name: 'editTeam', params: { id: team._id } }"
-                    class="btn btn-primary"
-                    >Edit</router-link
-                  >
-                </td>
-                <td>
-                  <button
-                    v-on:click="deleteTeam(team._id)"
-                    class="btn btn-danger"
-                  >
-                    Delete
-                  </button>
-                </td>
+              
               </tr>
               
             </tbody>
@@ -126,6 +98,7 @@ export default {
   data() {
     return {
       eTeams: [],
+     
       wTeams: []
     };
   },
@@ -138,12 +111,19 @@ export default {
         console.log(response.data);
       });
     },
+    doMath(index) {
+      return index+1;
+    },
+    calculate(number) {
+      return number.toFixed(1);
+    },
   },
+  // takes teams collection, filters into east and western conferences, and sorts it starting with the team with the most wins and least losses
   created() {
     let uri = "http://localhost:5000/teams/teams";
     this.axios.get(uri).then((response) => {
-      this.eTeams = response.data.filter((team) => team.conference === 'East');
-      this.wTeams = response.data.filter((team) => team.conference === 'West');
+      this.eTeams = response.data.filter((team) => team.conference === 'East').sort((a,b) => a.confRecord.win - a.confRecord.loss > b.confRecord.win - b.confRecord.loss? -1 : 1);
+      this.wTeams = response.data.filter((team) => team.conference === 'West').sort((a,b) => a.confRecord.win - a.confRecord.loss> b.confRecord.win - b.confRecord.loss? -1 : 1);
     });
   },
 };

@@ -76,13 +76,14 @@ teamRoutes.route('/editTeam/:id').get(function (req, res) {
 //  Defined update route
 teamRoutes.route('/updateTeam/:id').post(function (req, res) {
     Team.findById(req.params.id, function(err, team) {
-    let old = team.name;
+  
   
     if (!team)
       res.status(404).send("data is not found");
     else {
+      updateGame(team.name, req.body.name, res);
         team.name = req.body.name;
-        updateGame(old, team.name, res);
+        
         team.save().then(() => {
           res.json('Update complete');
       })

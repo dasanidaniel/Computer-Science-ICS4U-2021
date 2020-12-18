@@ -14,6 +14,7 @@
               v-model="team.name"
               placeholder="Name"
             />
+             <p v-if="!nameIsValid" class="error-message">Name Field is required</p>
           </div>
         </div>
       </div>
@@ -27,11 +28,13 @@
               <option>West</option>
               <br />
             </select>
+             <p v-if="!confIsValid" class="error-message">Name Field is required</p>
           </div>
         </div>
       </div>
       <div class="form-group">
         <button class="btn btn-primary">Create</button>
+        <button v-on:click="cancel" class="btn btn-danger">Cancel</button>
       </div>
     </form>
   </div>
@@ -43,12 +46,29 @@ export default {
       team: {},
     };
   },
+  computed : {
+    nameIsValid() {
+      return !!this.team.name;
+    },
+    confIsValid() {
+      return !!this.team.conference;
+    }
+  },
   methods: {
+     cancel() {
+          this.$router.push({name: 'teams'});
+        },
+    
     addTeam() {
+      let teamIsValid = this.nameIsValid && this.confIsValid;
+      if (teamIsValid) {
       let uri = "http://localhost:5000/teams/add";
       this.axios.post(uri, this.team).then(() => {
         this.$router.push({ name: "teams" });
       });
+      } else {
+        alert("MISSING DATA");
+      }
     },
   },
 };
