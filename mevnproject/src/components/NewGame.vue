@@ -110,11 +110,10 @@ export default {
   methods: {
     addGame() {
       let uri = "http://localhost:5000/games/add";
-      // let url = "http://localhost:5000/teams/teams";
-      // let update = "http://localhost:5000/games/updateTeams";
+   
       this.axios.post(uri, this.game)
-      // .then(this.axios.push(update, this.game))
-      .then(this.$router.push({name: "gamePage"}))
+      
+      .then(this.$router.push({name: "gamePage"}));
     }
   }
 };

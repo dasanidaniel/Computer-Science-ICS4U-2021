@@ -5,40 +5,40 @@
         <div>Stats</div>
 
         <div>This is where a table with overall statistics will be placed.</div>
-        <div>
+        <div class="container">
           <table class="table table-hover">
-            <thead>
+            <thead class="thead-dark">
               <tr>
                 <th>Name</th>
                 <th>W</th>
                 <th>L</th>
                 <th>W/L</th>
                 <th>GB</th>
-                <th>DIV</th>
+               
                 <th>CONF</th>
                 <th>PPG</th>
                 <th>OPP PPG</th>
                 <th>DIFF</th>
 
-                <th>L10</th>
+              
                 <th>EDIT</th>
                 <th>DELETE</th>
               </tr>
             </thead>
 
-            <tbody>
+            <tbody class="bg-light">
               <tr v-for="team in teams" :key="team._id">
                 <td>{{ team.name }}</td>
                 <td>{{ team.win }}</td>
                 <td>{{ team.loss }}</td>
                 <td>{{ team.PCT }}</td>
                 <td>{{ team.GB }}</td>
-                <td>{{ team.divRecord.win }}-{{ team.divRecord.loss }}</td>
+
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
-                <td>{{ team.PPG / team.numGames}}</td>
-                <td>{{ team.oppPPG / team.numGames}}</td>
+                <td>{{ team.PPG / team.numGames | parseFloat() | toFixed(2)}}</td>
+                <td>{{ team.oppPPG / team.numGames| parseFloat() | toFixed(2)}}</td>
                 <td>{{ team.avgDiff }}</td>
-                <td>{{ team.last10 }}</td>
+           
 
                 <td>
                   <router-link
@@ -56,6 +56,28 @@
                   </button>
                 </td>
               </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+
+                <td colspan="2">
+                  <router-link
+                    :to="{ name: 'newTeam'}"
+                    class="btn btn-primary"
+                    >+ Team</router-link
+                  >
+                </td>
+                
+              </tr>
             </tbody>
           </table>
         </div>
@@ -70,7 +92,7 @@ export default {
       teams: [],
     };
   },
-
+ 
   methods: {
     deleteTeam(id) {
       let uri = `//localhost:5000/teams/delete/${id}`;

@@ -9,7 +9,7 @@ let Game = new Schema({
     type: Date, String
   },
   homeTeam: {
-    type: String, default: "empty"
+    type: String, default: new Date()
   },
   homeScore: {
       type: Number, default: 0

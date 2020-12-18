@@ -42,8 +42,8 @@ let Team = new Schema({
     type:Number, default: 0
   },
 
-  last10: {
-      type: String, default: "W0"
+  conference: {
+    type: String, default: "E"
   }
 
 },{

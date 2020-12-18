@@ -3,6 +3,40 @@ const teamRoutes = express.Router();
 
 // Require Post model in our routes module
 let Team = require('./team.model');
+let Game = require('./game.model');
+
+function updateGame(old, name, res) {
+  Game.find((err, games) => {
+    if (err) {
+      console.log("The error is: " + err);
+      res.json(err);
+    } else {
+      
+      games.forEach((game) => {
+        
+        if (game.homeTeam === old) {
+          
+          game.homeTeam = name;
+          game.save()
+          .catch(() => {
+            res.status(400).send("unable to save to database");
+          });
+
+        } else if (game.awayTeam === old) {
+          game.awayTeam = name;
+          game.save()
+          .catch(() => {
+            res.status(400).send("unable to save to database");
+          });
+          console.log('game Updated');
+        } else {
+          console.log('no team found');
+        }
+      });
+     
+    }
+});
+}
 
 // Defined store route
 teamRoutes.route('/add').post(function (req, res) {
@@ -42,10 +76,13 @@ teamRoutes.route('/editTeam/:id').get(function (req, res) {
 //  Defined update route
 teamRoutes.route('/updateTeam/:id').post(function (req, res) {
     Team.findById(req.params.id, function(err, team) {
+    let old = team.name;
+  
     if (!team)
       res.status(404).send("data is not found");
     else {
         team.name = req.body.name;
+        updateGame(old, team.name, res);
         team.save().then(() => {
           res.json('Update complete');
       })

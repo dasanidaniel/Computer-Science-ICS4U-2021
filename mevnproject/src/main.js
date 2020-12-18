@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
+Vue.use(VueFilterDateParse);
+Vue.use(VueFilterDateFormat);
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);

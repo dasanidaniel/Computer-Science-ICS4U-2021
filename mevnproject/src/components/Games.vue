@@ -1,5 +1,5 @@
  <template>
-  <div>
+  <div class="container">
     <div>
       <div>
         <div>Games</div>
@@ -7,20 +7,20 @@
         <div>This is where a table with overall statistics will be placed.</div>
         <div>
           <table class="table table-hover">
-            <thead>
+            <thead class ="thead-dark">
               <tr>
-                <th> </th>
+                <th class="text-right">Home</th>
                 <th> </th>
                 <th class="text-center">Games</th>
                 <th> </th>
-                <th> </th>
+                <th>Away</th>
                 <th>Date</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
 
-            <tbody>
+            <tbody class = "bg-light">
               <tr v-for="game in games" :key="game._id">
                 
                 <td class="text-right"><b>{{ game.homeTeam }}</b></td>
@@ -29,7 +29,7 @@
                 <td class="text-left">{{ game.awayScore }}</td>
                 <td class="text-left"> <b>{{ game.awayTeam }}</b> </td>
                 
-                <td>{{ game.date }} </td>
+                <td>{{ game.date | dateParse('YYYY-MM-DD') | dateFormat('MMMM D, YYYY') }} </td>
 
                 <td>
                   <router-link
@@ -46,6 +46,25 @@
                     Delete
                   </button>
                 </td>
+              </tr>
+              <tr>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td></td>
+                <td > </td>
+                
+                <td> </td>
+
+                <td colspan = "1" >
+                 <router-link
+                    :to="{ name: 'newGame'}"
+                    class="btn btn-primary "
+                    >+ Game</router-link
+                  >
+                </td>
+                <td> </td>
+                
               </tr>
             </tbody>
           </table>
@@ -73,37 +92,6 @@ export default {
         console.log(response.data);
       });
     },
-    displayDate(d) {
-
-      let date = "";
-      if (d.getMonth() == 0) {
-        date += "Jan.";
-      } else if (d.getMonth() == 1) {
-        date += "Feb.";
-      } else if (d.getMonth() == 2) {
-        date += "Mar.";
-      } else if (d.getMonth() == 3) {
-        date += "Apr.";
-      } else if (d.getMonth() == 4) {
-        date += "May.";
-      } else if (d.getMonth() == 5) {
-        date += "Jun.";
-      } else if (d.getMonth() == 6) {
-        date += "Jul.";
-      } else if (d.getMonth() == 7) {
-        date += "Aug.";
-      } else if (d.getMonth() == 8) {
-        date += "Sept.";
-      } else if (d.getMonth() == 9) {
-        date += "Oct.";
-      } else if (d.getMonth() == 10) {
-        date += "Nov.";
-      } else {
-        date += "Dec.";
-      }
-      date += " " + d.getDay() + ", " + d.getYear();
-      return date;
-    }
     
   },
   created() {
