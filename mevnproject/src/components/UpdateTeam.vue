@@ -14,6 +14,9 @@
               v-model="team.name"
               placeholder="Name"
             />
+          <p v-if="!nameIsValid" class="error-message">
+              Name Field is required
+            </p>
           </div>
         </div>
       </div>
@@ -26,7 +29,7 @@
               <br />
             </select>
             <p v-if="!confIsValid" class="error-message">
-              Name Field is required
+              Field is required
             </p>
           </div>
         </div>
