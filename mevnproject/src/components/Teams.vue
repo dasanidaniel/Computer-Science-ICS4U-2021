@@ -37,7 +37,7 @@
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
                 <td>{{ calculate(team.PPG / team.numGames)}}</td>
                 <td>{{ calculate(team.oppPPG / team.numGames) }}</td>
-                <td>{{ calculate(team.avgDiff) }}</td>
+                <td>{{ calculate(team.avgDiff / team.numGames) }}</td>
            
 
                 <td>
@@ -106,6 +106,7 @@ export default {
     },
   },
   created() {
+    console.log("Teams page");
     let uri = "http://localhost:5000/teams/teams";
     this.axios.get(uri).then((response) => {
       this.teams = response.data;

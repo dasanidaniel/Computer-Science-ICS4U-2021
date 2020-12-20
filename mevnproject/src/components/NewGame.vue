@@ -3,7 +3,7 @@
     <div>
       <h1>New Game</h1>
     </div>
-    <form @submit.prevent="addGame">
+    <form >
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -93,7 +93,7 @@
 
       <br />
       <div class="form-group">
-        <button class="btn btn-primary">Create</button>
+        <button v-on:click="addGame" class="btn btn-primary">Create</button>
         <button v-on:click="cancel" class="btn btn-danger">Cancel</button>
       </div>
     </form>
@@ -138,13 +138,15 @@ export default {
         },
     addGame() {
      let gameIsValid = this.dateIsValid && this.awayIsValid && this.homeIsValid && this.awayScoreIsValid && this.homeScoreIsValid;
-     console.log(gameIsValid);
-     if (gameIsValid) {
-      let uri = "http://localhost:5000/games/add";
-      this.axios.post(uri, this.game)
-      .then(this.$router.push({name: "gamePage"}));
+    
+     if (!gameIsValid) {
+      alert("MISSING DATA")
+     
      } else {
-       alert("Missing Information");
+       let uri = "http://localhost:5000/games/add";
+      this.axios.post(uri, this.game);
+      this.$router.push({name: "gamePage"});
+
      }
     }
   }

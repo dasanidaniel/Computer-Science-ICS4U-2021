@@ -110,28 +110,26 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            game: {},
-            teams: []
-        }
-    },
-    created() {
-      let uri = "http://localhost:5000/teams/teams";
+  data() {
+    return {
+      game: {},
+      teams: [],
+    };
+  },
+  created() {
+    let uri = "http://localhost:5000/teams/teams";
     this.axios.get(uri).then((response) => {
       this.teams = response.data;
     });
-    },
-    computed: {
+  },
+  computed: {
     dateIsValid() {
       return !!this.game.date;
     },
     awayIsValid() {
-      
       return !!this.game.awayTeam;
     },
     homeIsValid() {
-      
       return !!this.game.homeTeam;
     },
     homeScoreIsValid() {
@@ -139,29 +137,30 @@ export default {
     },
     awayScoreIsValid() {
       return !!this.game.awayScore;
-    }
+    },
   },
-  
-    methods: {
-        cancel() {
-          this.$router.push({name: 'gamePage'});
-        },
-        updateGame() {
-           let gameIsValid = this.dateIsValid && this.awayIsValid && this.homeIsValid && this.homeScoreIsValid && this.awayScoreIsValid;
-           
-           if (gameIsValid) {
-            let url = `http://localhost:5000/games/update/${this.$route.params.id}`;
-            this.axios.post(url, this.game).then(() => {
-                this.$router.push({name : 'gamePage'});
-            });
-            } else {
-            
-            alert("MISSING INFORMATION");
-           }
-           }
-        }
-}
-        
-    
 
+  methods: {
+    cancel() {
+      this.$router.push({ name: "gamePage" });
+    },
+    updateGame() {
+      let gameIsValid =
+        this.dateIsValid &&
+        this.awayIsValid &&
+        this.homeIsValid &&
+        this.homeScoreIsValid &&
+        this.awayScoreIsValid;
+
+      if (gameIsValid) {
+     
+        let url = `http://localhost:5000/games/update/${this.$route.params.id}`;
+        this.axios.post(url, this.game);
+        this.$router.push({ name: "gamePage" });
+      } else {
+        alert("MISSING INFORMATION");
+      }
+    },
+  },
+};
 </script>

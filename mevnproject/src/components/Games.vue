@@ -97,7 +97,9 @@ export default {
     let uri = "http://localhost:5000/games/games";
     this.axios.get(uri).then((response) => {
       this.games = response.data;
+      
     });
+
   },
 };
 </script>
