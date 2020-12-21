@@ -137,6 +137,7 @@ export default {
           this.$router.push({name: 'gamePage'});
         },
     addGame() {
+      console.log(this.game.date);
      let gameIsValid = this.dateIsValid && this.awayIsValid && this.homeIsValid && this.awayScoreIsValid && this.homeScoreIsValid;
     
      if (!gameIsValid) {
