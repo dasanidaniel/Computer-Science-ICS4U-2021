@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
+
+// properties of a team object are all displayed onto the dashboard
+// only property not shown is numGames - used to calculate PPGs in background
+
 let Team = new Schema({
   name: {
     type: String
@@ -15,14 +19,8 @@ let Team = new Schema({
       type: Number, default: 0
   },
  
-  GB: {
-    type: Number, default: 0
-  },
   
-  divRecord: {
-    win: {type:Number, default: 0},
-    loss: {type:Number, default: 0}
-  },
+
   confRecord: {
     win: {type:Number, default: 0},
     loss: {type:Number, default: 0}

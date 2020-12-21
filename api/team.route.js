@@ -5,13 +5,12 @@ const teamRoutes = express.Router();
 let Team = require('./team.model');
 let Game = require('./game.model');
 
+// updates games so that every game with the old team name will now display the new updated team name
 function updateGame(old, name, res) {
   Game.find((err, games) => {
     if (err) {
-      console.log("The error is: " + err);
       res.json(err);
     } else {
-      
       games.forEach((game) => {
         
         if (game.homeTeam === old) {
@@ -38,7 +37,7 @@ function updateGame(old, name, res) {
 });
 }
 
-// Defined store route
+// adds new team to collection
 teamRoutes.route('/add').post(function (req, res) {
   let team = new Team(req.body);
   team.save()
@@ -50,7 +49,7 @@ teamRoutes.route('/add').post(function (req, res) {
     });
 });
 
-// Defined get data(index or listing) route
+// gets all teams in teams collection
 teamRoutes.route('/teams').get(function (req, res) {
     Team.find(function(err, teams){
     if(err){
@@ -81,9 +80,12 @@ teamRoutes.route('/updateTeam/:id').post(function (req, res) {
     if (!team)
       res.status(404).send("data is not found");
     else {
+      // updates game collection
       updateGame(team.name, req.body.name, res);
-        team.name = req.body.name;
-        
+      
+      // updates team  
+      team.name = req.body.name;
+        team.conference = req.body.conference;
         team.save().then(() => {
           res.json('Update complete');
       })
@@ -95,6 +97,7 @@ teamRoutes.route('/updateTeam/:id').post(function (req, res) {
 });
 
 // Defined delete | remove | destroy route
+// does not affect games collection
 teamRoutes.route('/delete/:id').delete(function (req, res) {
     Team.findByIdAndRemove({_id: req.params.id}, function(err){
         if(err) res.json(err);
