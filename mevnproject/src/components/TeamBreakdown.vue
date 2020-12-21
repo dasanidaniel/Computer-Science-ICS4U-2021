@@ -14,7 +14,7 @@
                 <th>W</th>
                 <th>L</th>
                 <th>W/L</th>
-                <th>GB</th>
+                
                
                 <th>CONF</th>
                 <th>PPG</th>
@@ -33,7 +33,7 @@
                 <td>{{ team.win }}</td>
                 <td>{{ team.loss }}</td>
                 <td>{{ calculate(team.win / team.loss) }}</td>
-                <td>{{ team.GB }}</td>
+           
               
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
                 <td>{{ calculate(team.PPG / team.numGames) }}</td>
@@ -56,7 +56,7 @@
                 <th>W</th>
                 <th>L</th>
                 <th>W/L</th>
-                <th>GB</th>
+             
                
                 <th>CONF</th>
                 <th>PPG</th>
@@ -75,7 +75,7 @@
                 <td>{{ team.win }}</td>
                 <td>{{ team.loss }}</td>
                 <td>{{ calculate(team.win / team.loss) }}</td>
-                <td>{{ team.GB }}</td>
+                
               
                 <td>{{ team.confRecord.win }}-{{ team.confRecord.loss }}</td>
                 <td>{{ calculate(team.PPG / team.numGames)}}</td>
