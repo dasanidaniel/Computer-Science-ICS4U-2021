@@ -89,6 +89,7 @@
             </tbody>
           </table>
           </div></div>
+          <h6>Here teams are sorted by conference as well as positioned by most conference wins</h6>
       </div>
     </div>
   </div>
