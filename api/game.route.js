@@ -5,104 +5,184 @@ const gameRoutes = express.Router();
 let Game = require('./game.model');
 let Team = require('./team.model');
 // const { route } = require('./team.route');
-function updateConf(win, loss, res) {
+
+
+
+// updates conference record - pass in wining, losing team and response
+function updateConf(win, loss) {
   win.confRecord.win += 1;
   loss.confRecord.loss += 1;
-  win.save().catch(() => {
-    res.status(400).send("unable to update the database");
-  });
-  loss.save().catch(() => {
-    res.status(400).send("unable to update the database");
-  });
+  
 }
-
-function undoUpdateConf(win, loss, res) {
-  win.confRecord.win -= 1;
-  loss.confRecord.loss -= 1;
-  win.save().catch(() => {
-    res.status(400).send("unable to update the database");
-  });
-  loss.save().catch(() => {
-    res.status(400).send("unable to update the database");
-  });
-}
-
-function getData(req, res) {
+function undoTeamUpdate(game, res) {
   let winner;
   let loser;
   let winScore;
   let lossScore;
-  
-  
-  if (req.body.awayScore > req.body.homeScore) {
-    winner = req.body.awayTeam;
-    loser = req.body.homeTeam;
-    winScore = req.body.awayScore;
-    lossScore = req.body.homeScore;
+  let loserID;
+  let winnerID;
+  let winnerFound = false;
+  let loserFound = false;
+ 
+  if (parseInt(game.awayScore,10) > parseInt(game.homeScore,10)) {
+    winner = game.awayTeam;
+    loser = game.homeTeam;
+    winScore = parseInt(game.awayScore, 10);
+    lossScore = parseInt(game.homeScore, 10);
   } else {
-    winner = req.body.homeTeam;
-    loser = req.body.awayTeam;
-    lossScore = req.body.awayScore;
-    winScore = req.body.homeScore;
+    winner = game.homeTeam;
+    loser = game.awayTeam;
+    lossScore = parseInt(game.awayScore, 10);
+    winScore = parseInt(game.homeScore,10);
   }
+
   Team.find((err, teams) => {
     if (err) {
-      console.log("The error is: " + err);
+      console.log(err);
       res.json(err);
     } else {
-      
-      teams.forEach(team => {
-     
+      teams.forEach(team => { 
         if (team.name === winner) {
-          
-          team.win += 1;
-          team.numGames += 1;
-          team.PPG = parseInt(team.PPG, 10) + parseInt(winScore, 10);
-          team.oppPPG = parseInt(team.oppPPG, 10) + parseInt(lossScore, 10);
-          team.avgDiff += (team.PPG - team.oppPPG) / team.numGames;
-          console.log("Winning Team: " + team);
+          winnerID = team._id;
+          team.win -= 1;
+          team.numGames -= 1;
+          team.PPG -= winScore;
+          team.oppPPG -= lossScore;
+          team.avgDiff -= (winScore - lossScore);
           winner = team;
-          team.save().catch(() => {
-            res.status(400).send("unable to update the database");
-          });
+          winnerFound = true;
         } else if (team.name === loser) {
-          
-          team.loss += 1;
-          team.numGames += 1;
-          team.PPG = parseInt(team.PPG, 10) + parseInt(winScore, 10);
-          team.oppPPG = parseInt(team.oppPPG, 10) + parseInt(lossScore, 10);
-          team.avgDiff += (team.PPG - team.oppPPG) / team.numGames;
-          console.log("Losing Team : " + team);
-          loser = team;
-          team.save().catch(() => {
-            res.status(400).send("unable to update the database");
-          });
+          loserID = team._id;
+          team.loss -= 1;
+          team.numGames -= 1;
+          team.PPG -= lossScore;
+          team.oppPPG -= winScore;
+          team.avgDiff -= (lossScore - winScore);
+          loser = team;  
+          loserFound = true;
         };
       });
+      // removes incorrect statistics of conference losing team and winning team
+      if (!winnerFound || !loserFound) {
+        console.log("no team found");
+      } else {
+      if (loser.conference === winner.conference) {
+        undoUpdateConf(winner, loser, res);
+      }
+    
+
+      teams.forEach(team => {    
+        if (team._id.toString() === loserID.toString()) {
+          team = new Team(loser);  
+          console.log(team);
+          team.save().catch(err => res.json(err));
+          
+        } else if (team._id.toString() === winnerID.toString()) {
+          team = new Team(winner);
+          console.log(team);
+          team.save().catch(err => res.json(err));
+        }
+      })
+    } 
+      console.log("Undo Teams updated");
+
+    }
+  })
+}
+function undoUpdateConf(winner, loser) {
+  winner.confRecord.win -= 1;
+  loser.confRecord.loss -= 1;
+}
+// updates teams collection
+function getData(game, res) {
+  let winner;
+  let loser;
+  let winScore;
+  let lossScore;
+  let winnerID;
+  let loserID;
+
+  // determines winning and losing team
+  if (parseInt(game.awayScore, 10) > parseInt(game.homeScore, 10)) {
+    winner = game.awayTeam;
+    loser = game.homeTeam;
+    winScore = parseInt(game.awayScore,10);
+    lossScore = parseInt(game.homeScore,10);
+  } else {
+    winner = game.homeTeam;
+    loser = game.awayTeam;
+    lossScore = parseInt(game.awayScore,10);
+    winScore = parseInt(game.homeScore,10);
+    
+  }
+ 
+
+  // updates teams in teams collection
+  Team.find((err, teams) => {
+    if (err) {
+      res.json(err);
+    } else {
+      teams.forEach(team => {
+        if (team.name === winner) {
+          team.win += 1;
+          team.numGames += 1;
+          team.PPG += winScore;
+          team.oppPPG += lossScore;
+          team.avgDiff += winScore - lossScore;
+          
+          winnerID = team._id;
+          winner = team;
+  
+        } else if (team.name === loser) {
+          team.loss += 1;
+          team.numGames += 1;
+          team.PPG += lossScore;
+          team.oppPPG += winScore;
+          team.avgDiff += lossScore - winScore;
+         
+          loserID = team._id;
+          loser = team;
+ 
+        };
+      });
+      
       if (winner.conference === loser.conference) {
         updateConf(winner, loser, res);
       }
-      console.log("Teams updated");
-      
+     
     }
+    teams.forEach(team => {           
+      if (team._id.toString() === loserID.toString()) {
+        team = new Team(loser);
+        console.log("Losing Team: " + loser)
+        team.save().catch(err => res.json(err));
+      } else if (team._id.toString() === winnerID.toString()) {
+        team = new Team(winner);
+        console.log("Winning Team: " + winner);
+        team.save().catch(err => res.json(err));
+      }
+    });
   });
+  
+  console.log("Teams updated");
+
 }
-// Defined store route
+// Adds a game to game collection - updates teams collection as well
 gameRoutes.route('/add').post(function (req, res) {
   let game = new Game(req.body);
-  game.homeScore = parseInt(game.homeScore.toFixed(0));
-  game.awayScore = parseInt(game.awayScore.toFixed(0));
+  
   console.log(game);
+  getData(game, res);
   game.save()
     .then(() => {
-      getData(req, res);
+      
       res.status(200).json({ 'game': 'game added successfully' });
     })
     .catch(() => {
       res.status(400).send("unable to save to database");
     });
 
-   
+
 });
 
 // Defined get data(index or listing) route
@@ -113,7 +193,9 @@ gameRoutes.route('/games').get(function (req, res) {
     }
     else {
       games.sort((a, b) => a.date < b.date ? 1 : -1);
-      res.json(games);    }
+      
+      res.json(games);
+    }
   });
 });
 
@@ -128,64 +210,9 @@ gameRoutes.route('/edit/:id').get(function (req, res) {
   });
 });
 
-function undoTeamUpdate(game, res) {
-  let winner;
-  let loser;
-  let winScore;
-  let lossScore;
-  if (game.awayScore > game.homeScore) {
-    winner = game.awayTeam;
-    loser = game.homeTeam;
-    winScore = game.awayScore;
-    lossScore = game.homeScore;
-  } else {
-    winner = game.homeTeam;
-    loser = game.awayTeam;
-    lossScore = game.awayScore;
-    winScore = game.homeScore;
-  }
-  Team.find((err, teams) => {
-    
-    if (err) {
-      console.log(err);
-      res.json(err);
-    } else {
-      
-      teams.forEach(team => {
-        console.log(team.name);
-        if (team.name === winner) {
-          
-          team.win -= 1;
-          team.numGames -= 1;
-          team.PPG -= winScore;
-          team.oppPPG -= lossScore;
-          console.log("Undo Team: " + team);
-          team.save().catch(() => {
-            res.status(400).send("unable to update the database");
-          });
-          winner = team;
-        } else if (team.name === loser) {
-          team.loss -= 1;
-          team.numGames -= 1;
-          team.PPG -= parseInt(lossScore);
-          team.oppPPG -= parseInt(winScore);
-          console.log("Undo L Team : " + team);
-          team.save().catch(() => {
-            res.status(400).send("unable to update the database");
-          });
-          loser = team;
-        };
-      });
-      // removes incorrect statistics of conference losing team and winning team
-      if (loser.conference === winner.conference) {
-        undoUpdateConf(winner, loser, res);
-      }
+// removes stats associated with that specific game for team
+// used in both update and delete paths
 
-      console.log("Undo Teams updated");
-  
-    }
-})
-}
 
 //  Defined update route
 gameRoutes.route('/update/:id').post(function (req, res) {
@@ -193,14 +220,14 @@ gameRoutes.route('/update/:id').post(function (req, res) {
     if (!game)
       res.status(404).send("data is not found");
     else {
-     
+
       undoTeamUpdate(game, res);
       game.date = req.body.date;
       game.homeTeam = req.body.homeTeam;
       game.homeScore = req.body.homeScore;
       game.awayTeam = req.body.awayTeam;
       game.awayScore = req.body.awayScore;
-      getData(req, res);
+      getData(game, res);
       game.save().then(() => {
         res.json('Update complete');
       })
@@ -212,8 +239,20 @@ gameRoutes.route('/update/:id').post(function (req, res) {
   });
 });
 
+
 // Defined delete | remove | destroy route
 gameRoutes.route('/delete/:id').delete(function (req, res) {
+  Game.findById(req.params.id, function (err, game) {
+    if (err) {
+      res.json(err);
+    }
+    if (!game)
+      res.status(404).send("data is not found");
+    else {
+      undoTeamUpdate(game, res);
+    }
+
+  });
   Game.findByIdAndRemove({ _id: req.params.id }, function (err) {
     if (err) res.json(err);
     else res.json('Successfully removed');
