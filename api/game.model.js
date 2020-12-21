@@ -2,14 +2,15 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const Team = require('./team.model');
 
 // Define collection and schema for Game
 let Game = new Schema({
   date: {
-    type: Date, String
+    type: Date, default: new Date()
   },
   homeTeam: {
-    type: String, default: new Date()
+    type: String, default: "empty"
   },
   homeScore: {
       type: Number, default: 0
