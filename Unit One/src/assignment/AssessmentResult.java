@@ -10,8 +10,11 @@ public class AssessmentResult {
    * 
    * @return the average the student received on the assessment
    */
+  
   public double getAverage(){
+
     return 0;
+
   }
 
 }
