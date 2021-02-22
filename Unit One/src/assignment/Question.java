@@ -1,7 +1,6 @@
 package assignment;
 
 public class Question {
-  
   private String question;
   private int answer;
   private int marks;

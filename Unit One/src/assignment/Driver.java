@@ -2,7 +2,11 @@ package assignment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Date;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
+
 
 public class Driver {
  
@@ -14,9 +18,11 @@ private static QuestionBank qBank;
 private static Student[] students;  
 private static Class[] classes;
 private static Question[] questions;  
+private static Assessment[] assessments;  
 private static int numClasses = 0;
 private static int numStudents = 0;
 private static int numQuestions = 0;
+private static int numAssessments = 0;
 
 public Driver(){
 
@@ -58,40 +64,87 @@ public static void main(String[] args) {
       addClass(in);
     }
 
+    // Done
+
     else if (option == 2){
       addStudent(in);
     }
 
+    // Done
+
     else if (option == 3){
-      assignStudentClass();
+      assignStudentClass(in);
     }
+
+    // Needs Work
 
     else if (option == 4){
       addQuestion(in);
     }
-    
-    else if (option == 13){
-      displayAllClassses(classes);
+
+    // Done
+
+    else if (option == 5){
+      addAssessment(in);
     }
 
+    // Needs Work
+
+    else if (option == 6){
+      chooseAssignment(in);
+    }
+
+    // Needs Work
+    
     else if (option == 11){
       studentsByGrade(in);
     }
+
+    // Needs Work
 
     else if (option == 12){
       studentsByCohort(in);
     }
 
+    // Needs Work
+
+    else if (option == 13){
+      displayAllClassses(classes);
+    }
+
+    // Done
+
     else if (option == 14){
       displayAllStudents(students);
     }
 
+    // Done
+    
     else if (option == 15){
       displayAllQuestions(questions);
     }
 
+    // Done
+
   }
 
+
+/**
+ * Create a menu with the following functionality. 
+ * 1. Create new class --- DONE
+ * 2. Create new student --- DONE 
+ * 3. Assign a student to a class --- DONE 
+ * 4. Create a new question to add to the question bank --- DONE 
+ * 5. Create a new assignment and assign to a class --- DONE 
+ * 5a. Choose questions to add to the Assessment --- DONE 
+ * 6. Allow a student to take a test from a specific class --- DONE
+ * 7. Display a student's average 
+ * 8. Display a student's results for a specific course/class 
+ * 9. Display the average for all of the students in a class 
+ * 10. Display the average for a specific course 
+ * 11. Display all the students by grade --- DONE DONE
+ * 12. Display all the students by cohort --- DONE DONE
+ */
 
     /**
      * 
@@ -135,9 +188,9 @@ public static void main(String[] args) {
   System.out.println("3. Assign Student to Class");
   System.out.println("4. Create Question");
   System.out.println("5. Create a new Assignmnent for a Class");
-  System.out.println("5a. Choose Questions for Assignment");
-  System.out.println("6. Allow Student to Take Test from Class");
+  System.out.println("6. Choose Questions for Assignment");
   System.out.println("7. Allow Student to Take Test from Class");
+  System.out.println("8. Display Student Average");
   System.out.println("13. Display All Claasses");
   System.out.println("14. Display All Students");
   System.out.println("15. Display All Questions");
@@ -209,11 +262,11 @@ public static void main(String[] args) {
     Student f = new Student (firstName, lastName, grade, cohort);
     students[numStudents] = f;
     numStudents++;
-  
+
   }
 
   // MENU 3
-  private static void assignStudentClass() {
+  private static void assignStudentClass(Scanner scanner) {
 
     System.out.println();
     System.out.println("Assign a Student to a Class");
@@ -221,8 +274,6 @@ public static void main(String[] args) {
     System.out.println("______________________________");
     System.out.println();
     System.out.println("Student First Name:");
-    
-    Scanner scanner = new Scanner(System.in);
     
     String firstNameStudent = scanner.nextLine();
     
@@ -235,7 +286,7 @@ public static void main(String[] args) {
     
     for (int i = 0; i < numStudents; i++) {
     
-      if (studentFullName.equals(Student.getName())) {
+      if (studentFullName.equals(students[i].getName())) {
     
         System.out.println();
         System.out.println("Desired Course Code:");
@@ -245,6 +296,8 @@ public static void main(String[] args) {
         for (int j = 0; j < numClasses; i++) {
     
           Class c = classes[j];
+
+          // NEEDS TO BE FINISHED
     
         }
     
@@ -282,6 +335,78 @@ public static void main(String[] args) {
     numQuestions++;
 
 }
+
+  // MENU 5
+private static void addAssessment(Scanner scanner) {
+  
+  System.out.println();
+  System.out.println("Create Assessment");
+  System.out.println();
+  System.out.println("______________________________");
+  System.out.println();
+ 
+  System.out.println();
+  System.out.println("Assessment Name:");
+  
+  String newAssessmentName = scanner.nextLine();
+    
+  System.out.println();
+  System.out.println("Due Date:");
+  
+  /**
+  String newDueDate = scanner.nextLine();
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
+  String pattern = "ddMMyyyy";
+  Date parsedDueDate = simpleDateFormat.parse(newDueDate);
+  
+  System.out.println(parsedDueDate);
+  
+  Assessment f = new Assessment (newAssessmentName, parsedDueDate);
+  assessments[numAssessments] = f;
+  numAssessments++;
+  */
+  
+}
+
+
+
+  // MENU 6
+  private static void chooseAssignment(Scanner scanner) {
+
+    System.out.println();
+    System.out.println("Choose Assessment Questions");
+    System.out.println();
+    System.out.println("______________________________");
+    System.out.println();
+
+    System.out.println();
+    System.out.println("AssessmentName:");
+
+    String assessmentName = scanner.nextLine();
+        
+    for (int i = 0; i < numAssessments; i++) {
+    
+      if (assessmentName.equals(Assessment.getAssesmentName())) {
+    
+        System.out.println();
+        System.out.println("Desired Question:");
+        
+        String questionChosen = scanner.nextLine();
+          
+        for (int j = 0; j < numQuestions; i++) {
+    
+          Question c = questions[j];
+    
+          // NEEDS TO BE FINISHED
+
+        }
+    
+    
+      }
+    
+    }
+
+  }
 
 
 
@@ -346,7 +471,7 @@ public static void main(String[] args) {
       if (x != null) {
       
       System.out.println();
-      System.out.println(Student.getName());
+      System.out.println(x.getName());
       System.out.println(x.getGrade());
       System.out.println(x.getCohort());
 
@@ -433,7 +558,7 @@ public static void main(String[] args) {
   }
 
 
-
+  
   private static void loadAllQuestions(String fileName) {
     questions = new Question[MAX_QUESTIONS];
 
@@ -461,29 +586,6 @@ public static void main(String[] args) {
 
 
 }
-
-
-/**
- * Create a menu with the following functionality. 
- * 1. Create new class --- DONE DONE
- * 2. Create new student --- DONE DONE 
- * 3. Assign a student to a class --- DONE 
- * 4. Create a new question to add to the question bank --- DONE 
- * 5. Create a new assignment and assign to a class --- DONE 
- * 5a. Choose questions to add to the Assessment --- DONE 
- * 6. Allow a student to take a test from a specific class --- DONE
- * 7. Display a student's average 
- * 8. Display a student's results for a specific course/class 
- * 9. Display the average for all of the students in a class 
- * 10. Display the average for a specific course 
- * 11. Display all the students by grade --- DONE DONE
- * 12. Display all the students by cohort --- DONE DONE
- */
-
-
-
-
-
 
 
 

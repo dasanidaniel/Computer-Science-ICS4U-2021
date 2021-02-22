@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Driver",
+            "request": "launch",
+            "mainClass": "assignment.Driver",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        },
+        {
+            "type": "java",
+            "name": "Launch ArraysExamples",
+            "request": "launch",
+            "mainClass": "week1.ArraysExamples",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        },
+        {
+            "type": "java",
+            "name": "Launch CourseDriver",
+            "request": "launch",
+            "mainClass": "week1.CourseDriver",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        },
+        {
+            "type": "java",
+            "name": "Launch ExampleOne",
+            "request": "launch",
+            "mainClass": "week1.ExampleOne",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        }
+    ]
+}
