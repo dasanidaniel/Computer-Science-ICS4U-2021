@@ -95,32 +95,62 @@ public static void main(String[] args) {
     }
 
     // Needs Work
-    
+
+    else if (option == 7){
+      allowStudentTest(in);
+    }
+
+    // Needs Work
+
+    else if (option == 8){
+      studentAverage(in);
+    }
+
+    // Needs Work
+
+    else if (option == 9){
+      studentAverageByClass(in);
+    }
+
+    // Needs Work
+
+    else if (option == 10){
+      allAveragesInClass(in);
+    }
+
+    // Needs Work
+
     else if (option == 11){
+      averageAllStudentsClass(in);
+    }
+
+    // Needs Work
+    
+    else if (option == 12){
       studentsByGrade(in);
     }
 
     // Needs Work
 
-    else if (option == 12){
+    else if (option == 13){
       studentsByCohort(in);
     }
 
     // Needs Work
 
-    else if (option == 13){
+    else if (option == 14){
       displayAllClassses(classes);
     }
 
     // Done
 
-    else if (option == 14){
+    else if (option == 15){
       displayAllStudents(students);
     }
 
     // Done
     
-    else if (option == 15){
+    else if (option == 16){
       displayAllQuestions(questions);
     }
 
@@ -136,14 +166,14 @@ public static void main(String[] args) {
  * 3. Assign a student to a class --- DONE 
  * 4. Create a new question to add to the question bank --- DONE 
  * 5. Create a new assignment and assign to a class --- DONE 
- * 5a. Choose questions to add to the Assessment --- DONE 
- * 6. Allow a student to take a test from a specific class --- DONE
- * 7. Display a student's average 
- * 8. Display a student's results for a specific course/class 
- * 9. Display the average for all of the students in a class 
- * 10. Display the average for a specific course 
- * 11. Display all the students by grade --- DONE DONE
- * 12. Display all the students by cohort --- DONE DONE
+ * 6. Choose questions to add to the Assessment --- DONE 
+ * 7. Allow a student to take a test from a specific class --- DONE
+ * 8. Display a student's average 
+ * 9. Display a student's results for a specific course/class 
+ * 10. Display the average for all of the students in a class 
+ * 11. Display the average for a specific course 
+ * 12. Display all the students by grade --- DONE DONE
+ * 13. Display all the students by cohort --- DONE DONE
  */
 
     /**
@@ -191,9 +221,9 @@ public static void main(String[] args) {
   System.out.println("6. Choose Questions for Assignment");
   System.out.println("7. Allow Student to Take Test from Class");
   System.out.println("8. Display Student Average");
-  System.out.println("13. Display All Claasses");
-  System.out.println("14. Display All Students");
-  System.out.println("15. Display All Questions");
+  System.out.println("14. Display All Claasses");
+  System.out.println("15. Display All Students");
+  System.out.println("16. Display All Questions");
   System.out.println();
   System.out.println("______________________________");
   System.out.println();
