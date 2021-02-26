@@ -20,7 +20,7 @@ public void addQuestion(){
 
     Scanner in = new Scanner(System.in);
     String question = in.nextLine();
-    int answer = Integer.parseInt(in.nextLine());
+    String answer = in.nextLine();
     int marks = Integer.parseInt(in.nextLine());
 
     Question f = new Question(question, answer, marks);
@@ -39,7 +39,7 @@ public void addQuestion(){
 
       while(scanner.hasNextLine()){
         String question = scanner.nextLine().split(":")[1].trim();
-        int answer = Integer.parseInt(scanner.nextLine().split(":")[1].trim());
+        String answer = scanner.nextLine().split(":")[1].trim();
         int marks = Integer.parseInt(scanner.nextLine().split(":")[1].trim());
 
         Question q = new Question(question, answer, marks);
@@ -51,4 +51,9 @@ public void addQuestion(){
     }
 
   }
+
+
+public Question[] getQuestions() {
+	return questions;
+}
 }

@@ -1,18 +1,22 @@
 package assignment;
+
 import java.util.Date;
+import java.util.Scanner;
 
 public class Assessment {
   private static final int MAX_QUESTIONS = 100;
 
   private Question[] questions;
-  private static String assesmentName;
-  private Date dueDate;
+  private Assessment[] assessments;
+  private String assesmentName;
+  private String dueDate;
   private int numQuestions;
+  private int numAssessments;
 
-  public Assessment(String name, Date date) {
+  public Assessment(String name, String newDueDate) {
 
     this.assesmentName = name;
-    this.dueDate = date;
+    this.dueDate = newDueDate;
 
     questions = new Question[MAX_QUESTIONS];
 
@@ -25,13 +29,27 @@ public class Assessment {
 
   }
 
-  public static String getAssesmentName() {
+  public String getAssesmentName() {
     return assesmentName;
   }
 
-  public Date getDueDate(){
+  public String getDueDate(){
     return dueDate;
   }
+
+
+  public void addAssessment(Student students){
+
+    Scanner in = new Scanner(System.in);
+    String assesmentName = in.nextLine();
+    String dueDate = in.nextLine();
+
+    Assessment f = new Assessment(assesmentName, dueDate);
+    assessments[numAssessments] = f;
+    numAssessments++;
+  }
+
+
 
 }
 

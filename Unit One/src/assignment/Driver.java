@@ -13,6 +13,7 @@ public class Driver {
 private static final int MAX_CLASSES = 50;
 private static final int MAX_STUDENTS = 1000;
 private static final int MAX_QUESTIONS = 10000;
+private static final int MAX_ASSESMENTS = 50;
 
 private static QuestionBank qBank;
 private static Student[] students;  
@@ -26,25 +27,27 @@ private static int numAssessments = 0;
 
 public Driver(){
 
-  qBank = new QuestionBank("src\\assignment\\questionBank.dat");
+  assessments = new Assessment[MAX_ASSESMENTS];
+
+  qBank = new QuestionBank("Unit One\\src\\assignment\\questionBank.dat");
 
   /**
    * Create a list of students (Load from a file)
    */
 
-  loadAllStudents("src\\assignment\\students.dat");
+  loadAllStudents("Unit One\\src\\assignment\\students.dat");
 
   /**
    * Create a list of classes (Load from a file)
    */
 
-  loadAllClasses("src\\assignment\\courses.dat");
+  loadAllClasses("Unit One\\src\\assignment\\courses.dat");
    
   /**
    * Create a list of questions (Load from a file)
   */
 
-  loadAllQuestions("src\\assignment\\QuestionBank.dat");
+  //* loadAllQuestions("Unit One\\src\\assignment\\QuestionBank.dat");*/
    
 }
 
@@ -76,7 +79,7 @@ public static void main(String[] args) {
       assignStudentClass(in);
     }
 
-    // Needs Work
+    // Done
 
     else if (option == 4){
       addQuestion(in);
@@ -88,19 +91,19 @@ public static void main(String[] args) {
       addAssessment(in);
     }
 
-    // Needs Work
+    // Done
 
     else if (option == 6){
       chooseAssignment(in);
     }
 
-    // Needs Work
+    // Done
 
     else if (option == 7){
       allowStudentTest(in);
     }
 
-    // Needs Work
+    // Done
 
     else if (option == 8){
       studentAverage(in);
@@ -121,7 +124,7 @@ public static void main(String[] args) {
     // Needs Work
 
     else if (option == 11){
-      averageAllStudentsClass(in);
+      courseAverage(in);
     }
 
     // Needs Work
@@ -151,7 +154,7 @@ public static void main(String[] args) {
     // Done
     
     else if (option == 16){
-      displayAllQuestions(questions);
+      displayAllQuestions(qBank);
     }
 
     // Done
@@ -208,7 +211,9 @@ public static void main(String[] args) {
 
 
 
-  private static void displayMenu() {
+
+
+private static void displayMenu() {
 
   System.out.println();
   System.out.println("LEDSBY - School Software");
@@ -323,19 +328,21 @@ public static void main(String[] args) {
         
         String courseCode = scanner.nextLine();
           
-        for (int j = 0; j < numClasses; i++) {
+        for (int j = 0; j < numClasses; i++) { // HERE NEEDS TO BE FINISHED
     
-          Class c = classes[j];
+          if (courseCode.equals(classes[j].getCourseCode())) {
 
-          // NEEDS TO BE FINISHED
-    
+            classes[j].addStudent(students[i]);          
+            return;
         }
     
     
       }
-    
+
     }
-    
+
+    }
+        
   }
 
   // MENU 4         
@@ -353,7 +360,7 @@ public static void main(String[] args) {
     System.out.println();
     System.out.println("Answer:");
 
-    int answer = Integer.parseInt(scanner.nextLine()); 
+    String answer = scanner.nextLine();
 
     System.out.println();
     System.out.println("Marks:");
@@ -383,18 +390,13 @@ private static void addAssessment(Scanner scanner) {
   System.out.println();
   System.out.println("Due Date:");
   
-  /**
   String newDueDate = scanner.nextLine();
-  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
-  String pattern = "ddMMyyyy";
-  Date parsedDueDate = simpleDateFormat.parse(newDueDate);
   
-  System.out.println(parsedDueDate);
   
-  Assessment f = new Assessment (newAssessmentName, parsedDueDate);
+  Assessment f = new Assessment (newAssessmentName, newDueDate);
   assessments[numAssessments] = f;
   numAssessments++;
-  */
+
   
 }
 
@@ -410,13 +412,13 @@ private static void addAssessment(Scanner scanner) {
     System.out.println();
 
     System.out.println();
-    System.out.println("AssessmentName:");
+    System.out.println("Assessment Name:");
 
     String assessmentName = scanner.nextLine();
         
     for (int i = 0; i < numAssessments; i++) {
     
-      if (assessmentName.equals(Assessment.getAssesmentName())) {
+      if (assessmentName.equals(assessments[i].getAssesmentName())) {
     
         System.out.println();
         System.out.println("Desired Question:");
@@ -424,10 +426,12 @@ private static void addAssessment(Scanner scanner) {
         String questionChosen = scanner.nextLine();
           
         for (int j = 0; j < numQuestions; i++) {
+
+          if (questionChosen.equals(questions[j].getQuestion())) {
     
-          Question c = questions[j];
-    
-          // NEEDS TO BE FINISHED
+          assessments[j].addQuestion(questions[i]);          
+          return;
+          
 
         }
     
@@ -435,12 +439,223 @@ private static void addAssessment(Scanner scanner) {
       }
     
     }
+    }
 
   }
 
 
+    // MENU 7
+   private static void allowStudentTest(Scanner scanner) {
+
+    System.out.println();
+    System.out.println("Assign Student to an Assessment");
+    System.out.println();
+    System.out.println("______________________________");
+    System.out.println();
+  
+    System.out.println("Student First Name:");
+    
+    String firstNameStudent = scanner.nextLine();
+      
+    System.out.println();
+    System.out.println("Student Last Name:");
+      
+    String lastNameStudent = scanner.nextLine();
+      
+    String studentFullName = lastNameStudent + "," + firstNameStudent; 
+      
+    for (int i = 0; i < numStudents; i++) {
+      
+      if (studentFullName.equals(students[i].getName())) {
+      
+        System.out.println();
+        System.out.println("Assessment Name:");
+          
+        String assessmentChosen = scanner.nextLine();
+            
+        for (int j = 0; j < numAssessments; i++) {
+  
+          if (assessmentChosen.equals(assessments[j].getAssesmentName())) {
+      
+            assessments[j].addAssessment(students[i]);          
+  
+            // LOTS MISSING HERE
+
+          }
+        }
+      }
+    }
+  }
+
+
+  // MENU 8
+  private static void studentAverage(Scanner scanner) {
+
+    System.out.println();
+    System.out.println("Display Student Average");
+    System.out.println();
+    System.out.println("______________________________");
+    System.out.println();
+    
+    System.out.println("Student First Name:");
+      
+    String firstNameStudent = scanner.nextLine();
+        
+    System.out.println();
+    System.out.println("Student Last Name:");
+        
+    String lastNameStudent = scanner.nextLine();
+        
+    String studentFullName = lastNameStudent + "," + firstNameStudent; 
+        
+    for (int i = 0; i < numStudents; i++) {
+        
+      if (studentFullName.equals(students[i].getName())) {
+  
+        for (int j = 0; j < numAssessments; j++) {
+    
+          if (assessment[j].isMarked == true) {
+    
+            int[] tempGrades;
+    
+            for () {
+
+            // LOTS MISSING HERE
+
+            }
+  
+          }
+        }
+      }
+    }
+  }
+
+
+  // MENU 9
+  private static void studentAverageByClass(Scanner scanner) {
+
+    System.out.println();
+    System.out.println("Display Class Average");
+    System.out.println();
+    System.out.println("______________________________");
+    System.out.println();
+
+    System.out.println("Student First Name:");
+      
+    String firstNameStudent = scanner.nextLine();
+        
+    System.out.println();
+    System.out.println("Student Last Name:");
+        
+    String lastNameStudent = scanner.nextLine();
+        
+    String studentFullName = lastNameStudent + "," + firstNameStudent; 
+        
+    for (int i = 0; i < numStudents; i++) {
+        
+      if (studentFullName.equals(students[i].getName())) {
+
+        System.out.println("Course Code:");
+      
+        String desiredCourseCode = scanner.nextLine();
+        
+        // LOTS MISSING HERE
+
+        for (int j = 0; j < numAssessments; j++) {
+    
+          if (assessment[j].isMarked == true) {
+    
+            int[] tempGrades;
+    
+            for () {
+          
+            }
+  
+          }
+        }
+      }
+    }
+
+  }
+
+
+  // MENU 10
+  private static void allAveragesInClass(Scanner scanner) {
+
+    System.out.println();
+    System.out.println("Display Averages in Class");
+    System.out.println();
+    System.out.println("______________________________");
+    System.out.println();
+    
+    System.out.println("Course Code:");
+      
+    String desiredCourseCode = scanner.nextLine();
+        
+    for (int i = 0; i < numClasses; i++) {
+        
+      if (desiredCourseCode.equals(classes[i].getCourseCode())) {
+  
+        for (int j = 0; j < numAssessments; j++) {
+    
+          if (assessment[j].isMarked == true) {
+    
+            int[] tempGrades;
+            
+            // Need to make it print the averages of every student in class (List)
+
+            for () {
+          
+            }
+  
+          }
+        }
+      }
+    }
+
+  }
+    
 
   // MENU 11
+  private static void courseAverage(Scanner scanner) {
+
+    System.out.println();
+    System.out.println("Display Class Average");
+    System.out.println();
+    System.out.println("______________________________");
+    System.out.println();
+
+    System.out.println("Course Code:");
+      
+    String desiredCourseCode = scanner.nextLine();
+        
+    for (int i = 0; i < numClasses; i++) {
+        
+      if (desiredCourseCode.equals(classes[i].getCourseCode())) {
+  
+        
+
+      }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // MENU 12
   private static void studentsByGrade(Scanner scanner) {
 
     int grade = Integer.parseInt(scanner.nextLine()); 
@@ -455,7 +670,7 @@ private static void addAssessment(Scanner scanner) {
 }
 
 
-  // MENU 12
+  // MENU 13
   private static void studentsByCohort (Scanner scanner) {
 
   String cohort = scanner.nextLine();
@@ -470,7 +685,7 @@ private static void addAssessment(Scanner scanner) {
 }
 
 
-  // MENU 13
+  // MENU 14
   private static void displayAllClassses(Class[] classes) {
 
   System.out.println();
@@ -494,7 +709,7 @@ private static void addAssessment(Scanner scanner) {
   }
 
 
-  // MENU 14
+  // MENU 15
   private static void displayAllStudents(Student[] students) {
 
     for (Student x : students) {
@@ -515,8 +730,10 @@ private static void addAssessment(Scanner scanner) {
   }  
   
   
-  // MENU 15
-  private static void displayAllQuestions(Question[] questions) {
+  // MENU 16
+  private static void displayAllQuestions(QuestionBank qBank) {
+
+  Question[] questions = qBank.getQuestions();
 
     for (Question x : questions) {
       if (x != null) {
@@ -538,12 +755,11 @@ private static void addAssessment(Scanner scanner) {
 
 
   private static void loadAllClasses(String fileName) {
-    classes = new Class[MAX_CLASSES];
+    
 
     try{
-
       Scanner scanner = new Scanner(new File(fileName));
-     
+      classes = new Class[MAX_CLASSES];
       while(scanner.hasNextLine()){
         String name = scanner.nextLine().split(":")[1].trim();
         String courseCode = scanner.nextLine().split(":")[1].trim();
@@ -588,7 +804,7 @@ private static void addAssessment(Scanner scanner) {
   }
 
 
-  
+  /** 
   private static void loadAllQuestions(String fileName) {
     questions = new Question[MAX_QUESTIONS];
 
@@ -598,7 +814,7 @@ private static void addAssessment(Scanner scanner) {
      
       while(scanner.hasNextLine()){
         String question = scanner.nextLine().split(":")[1].trim();
-        int answer = Integer.parseInt(scanner.nextLine().split(":")[1].trim());
+        String answer = scanner.nextLine().split(":")[1].trim();
         int mark = Integer.parseInt(scanner.nextLine().split(":")[1].trim());
   
         Question f = new Question(question, answer, mark);
@@ -611,6 +827,7 @@ private static void addAssessment(Scanner scanner) {
       System.out.println("FILE NOT FOUND");
     }
   }
+  */
 
 
 

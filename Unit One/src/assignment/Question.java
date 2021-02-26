@@ -2,10 +2,10 @@ package assignment;
 
 public class Question {
   private String question;
-  private int answer;
+  private String answer;
   private int marks;
 
-  public Question(String question, int answer, int marks) {
+  public Question(String question, String answer, int marks) {
     this.question = question;
     this.answer = answer;
     this.marks = marks;
@@ -15,9 +15,10 @@ public class Question {
     return question;
   }
   
-  public int getAnswer() {
+  public String getAnswer() {
     return answer;
   }
+  
   
   
   public int getMarks() {
