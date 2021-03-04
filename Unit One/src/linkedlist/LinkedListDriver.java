@@ -15,6 +15,8 @@ public class LinkedListDriver {
 
         while (!ends){
 
+            //  Menu
+
             System.out.println("");
             System.out.println("To add a contact press 1");
             System.out.println("To display all contacts press 2");
@@ -64,6 +66,8 @@ public class LinkedListDriver {
         ni.close();
         options.close();
     }
+
+    // Create a new contact, using first/last/number strings
     private static void newContact(ContactLinkedList contacts){
 
         Scanner in = new Scanner (System.in);
@@ -85,7 +89,7 @@ public class LinkedListDriver {
 
     } 
 
-
+    // See contacts.search() in ContactLinkedList
     private static void searchContact(ContactLinkedList contacts){ 
 
         Scanner in = new Scanner (System.in); 
@@ -100,7 +104,7 @@ public class LinkedListDriver {
         
     }
 
-
+    // See contacts.remove() in ContactLinkedList
     private static void deleteContact(ContactLinkedList contacts){
 
         Scanner in = new Scanner (System.in);

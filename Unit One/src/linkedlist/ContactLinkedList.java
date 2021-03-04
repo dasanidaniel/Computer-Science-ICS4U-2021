@@ -23,6 +23,7 @@ public class ContactLinkedList {
     }
   
     public void remove(String phone) {
+
       if (head == null)
         return;
       else if (head.getData().getPhone().equals(phone))
@@ -40,14 +41,15 @@ public class ContactLinkedList {
   
     }
 
+    // Search through contacts via comparing lName
     public void search (String lName){
 
         ContactNode ptr = head;
 
         while(ptr != null){
 
-            if (ptr.getData().getlName().equals(lName)) { 
-                System.out.println(ptr.getData().getlName());
+            if (ptr.getData().getlName().equals(lName)) {
+                // Print contact info
                 System.out.println(ptr.getData().toString()); 
                 ptr = ptr.getLink();
             }
@@ -60,19 +62,20 @@ public class ContactLinkedList {
     }
     
 
-    public static void printList(ContactLinkedList list) 
-    { 
+    public static void printList(ContactLinkedList list) { 
+
         ContactNode ptr = list.head; 
-    
+
         System.out.print("Contacts: "); 
-    
-        // Traverse through the LinkedList 
+        // Loop to print all contacts
         while (ptr != null) { 
             
             System.out.print(ptr.data + " "); 
     
-             
             ptr = ptr.getLink(); 
+
         } 
+    
     } 
+
 }
