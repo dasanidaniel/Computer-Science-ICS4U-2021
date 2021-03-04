@@ -29,9 +29,9 @@ public class Student {
     return lastName;
   }
 
-public String getCohort() {
-	return cohort;
-}
+  public String getCohort() {
+  	return cohort;
+  }
 
 //Testing
 

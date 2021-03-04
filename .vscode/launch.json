@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch LinkedListDriver",
+            "request": "launch",
+            "mainClass": "linkedlist.LinkedListDriver",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
