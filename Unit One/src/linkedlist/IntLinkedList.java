@@ -12,7 +12,6 @@ public class IntLinkedList {
     if (head == null)
       head = node;
     else {
-      // iterate to the end and add it there
       IntNode ptr = head;
       while (ptr.getLink() != null) {
         ptr = ptr.getLink();
