@@ -21,6 +21,8 @@ public class Stack {
   }
 
   public void push(int el) {
+    if (manyItems == data.length)
+      throw new IllegalStateException();
     data[manyItems] = el;
     manyItems++;
   }
@@ -36,14 +38,20 @@ public class Stack {
     if (!isEmpty()) {
       manyItems--;
       return data[manyItems];
-    }
-      else 
+    } else
       throw new IllegalStateException();
   }
 
   public int search(int el) {
     int depth = 0;
-    for (int)
+    for (int i = manyItems - 1; i >= 0; i--) {
+      if (data[i] == el)
+        return depth;
+      else
+        depth++;
+    }
+
+    return -1;
   }
 
 }

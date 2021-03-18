@@ -7,10 +7,17 @@ public class ContactLinkedList {
       this.head = null;
     }
   
+
+    /**
+     * Code below is responsible for adding new contacts to the list.
+     * @param c the contact being added to the list.
+     */
     public void add(Contact c) {
+
       ContactNode node = new ContactNode(c, null);
       if (head == null)
         head = node;
+
       else {
         // iterate to the end and add it there
         ContactNode ptr = head;
@@ -19,9 +26,15 @@ public class ContactLinkedList {
         }
   
         ptr.setLink(node);
+
       }
     }
-  
+
+    /**
+     * The code below is responsible for removing contacts. 
+     * @param phone the phone number attached to the contact to be removed.
+     */
+
     public void remove(String phone) {
 
       if (head == null)
@@ -61,7 +74,10 @@ public class ContactLinkedList {
 
     }
     
-
+    /**
+     * Code below responsible for printing a list of all contacts
+     * @param list
+     */
     public static void printList(ContactLinkedList list) { 
 
         ContactNode ptr = list.head; 

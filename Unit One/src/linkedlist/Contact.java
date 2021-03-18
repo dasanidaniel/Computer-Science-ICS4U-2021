@@ -13,7 +13,7 @@ public class Contact {
 
   @Override
   public String toString() {
-    return "Contact" + "[" + fName + ", " + lName + ", phone=" + phone + "]";
+    return "Contact" + "[" + fName + ", " + lName + ", phone=" + phone + "] \n";
   }
 
   public String getfName() {

@@ -3,15 +3,17 @@ package linkedlist;
 import java.util.Scanner;
 
 public class LinkedListDriver {
+
+    private static final String YES = "Yes";
+    private static final String YES2 = "yes";
+    private static final String YES3 = "y";
     public static void main(String[] args) {
 
-        Scanner ni = new Scanner (System.in);
+        Scanner in = new Scanner (System.in);
         ContactLinkedList contacts = new ContactLinkedList();
         boolean ends = false;
         Scanner options = new Scanner (System.in);
-        String yes = "Yes";
-        String yes2 = "yes";
-        String yes3 = "y";
+
 
         while (!ends){
 
@@ -50,9 +52,9 @@ public class LinkedListDriver {
             System.out.println("");
             System.out.println("If you would like to use the menu again please type Yes , and if not please type No");
 
-            String end = (ni.nextLine());
+            String end = (in.nextLine());
 
-            if (end.equals(yes) || end.equals(yes2) || end.equals(yes3)){
+            if (end.equals(YES) || end.equals(YES2) || end.equals(YES3)){
                 ends = false;
                 System.out.println("");
                 System.out.println("____________________________");
@@ -63,11 +65,16 @@ public class LinkedListDriver {
             }
         }
 
-        ni.close();
+        in.close();
         options.close();
     }
 
-    // Create a new contact, using first/last/number strings
+    
+    /**
+     * Create a new contact, using first/last/number strings
+     * @param contacts represents the list of contacts in which new contact containing LastN, FirstN and pNumber are being added to.
+     */
+
     private static void newContact(ContactLinkedList contacts){
 
         Scanner in = new Scanner (System.in);
@@ -89,7 +96,10 @@ public class LinkedListDriver {
 
     } 
 
-    // See contacts.search() in ContactLinkedList
+    /**
+     * See contacts.search() in ContactLinkedList
+     * @param contacts The contact list in which the inputted contact should be searched for. 
+     */
     private static void searchContact(ContactLinkedList contacts){ 
 
         Scanner in = new Scanner (System.in); 
@@ -103,8 +113,10 @@ public class LinkedListDriver {
         System.out.println("____________________________");
         
     }
-
-    // See contacts.remove() in ContactLinkedList
+    /**
+     * See contacts.remove() in ContactLinkedList
+     * @param contacts 
+     */
     private static void deleteContact(ContactLinkedList contacts){
 
         Scanner in = new Scanner (System.in);

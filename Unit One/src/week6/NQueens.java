@@ -16,23 +16,31 @@ public class NQueens {
     goodQueens.push(q);
     numFilled++;
 
+    int col = 0;
+
     while (numFilled != n) {
 
       int row = numFilled + 1;
-      int col = 1;
+      col++;
 
       if (!conflict(new Queen(row, col), goodQueens)) {
         goodQueens.push(new Queen(row, col));
         numFilled++;
+        col = 0;
       }
       
       else {
+
+        if (col + 1 > numFilled) {
+          q = goodQueens.pop();
+          col = q.getCol();
+          numFilled--;
         // can we move over one? increase col then we try to increase col
         // if we cannot the numFilled-- and pop the stack
-      }
+        }
 
     }
-
+    }
     return goodQueens;
 
   }
@@ -45,8 +53,7 @@ public class NQueens {
 
       Queen q = goodQueens.peek();
 
-      if (q.getCol() == queen.getCol() || q.getRow() == queen.getRow()
-          || (Math.abs(q.getCol() - queen.getCol()) == Math.abs(q.getRow() - queen.getRow()))) {
+      if (q.getCol() == queen.getCol() || q.getRow() == queen.getRow() || (Math.abs(q.getCol() - queen.getCol()) == Math.abs(q.getRow() - queen.getRow()))) {
         while (!temp.isEmpty())
           goodQueens.push(temp.pop());
         return true;

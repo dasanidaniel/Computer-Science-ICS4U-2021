@@ -104,7 +104,8 @@ public static void main(String[] args) {
     }
 
     // Done
-
+    
+/**
     else if (option == 8){
       studentAverage(in);
     }
@@ -126,6 +127,7 @@ public static void main(String[] args) {
     else if (option == 11){
       courseAverage(in);
     }
+    */
 
     // Needs Work
     
@@ -264,7 +266,7 @@ private static void displayMenu() {
 
 
 
-  // MENU 2
+  // MENU 26
   private static void addStudent(Scanner scanner) {
   
     System.out.println();
@@ -487,7 +489,7 @@ private static void addAssessment(Scanner scanner) {
     }
   }
 
-
+/** 
   // MENU 8
   private static void studentAverage(Scanner scanner) {
 
@@ -637,7 +639,7 @@ private static void addAssessment(Scanner scanner) {
 
       }
   }
-
+*/
 
 
 

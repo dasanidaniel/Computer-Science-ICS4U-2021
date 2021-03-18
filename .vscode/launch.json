@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Driver",
+            "request": "launch",
+            "mainClass": "gradebook2.Driver",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        },
+        {
+            "type": "java",
+            "name": "Launch NQueens",
+            "request": "launch",
+            "mainClass": "week6.NQueens",
+            "projectName": "Computer-Science-ICS4U-2021_be1b6b33"
+        },
+        {
+            "type": "java",
             "name": "Launch LinkedListDriver",
             "request": "launch",
             "mainClass": "linkedlist.LinkedListDriver",
