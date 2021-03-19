@@ -18,6 +18,7 @@ public class Queen {
 
   public void setCol(int col) {
     this.col = col;
+    //test
   }
 
   public Queen(int row, int col) {

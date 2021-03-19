@@ -1,7 +1,6 @@
 package week6;
 
 import java.util.Stack;
-import week6.Queen;
 
 public class NQueens {
   public static void main(String[] args) {
@@ -35,12 +34,12 @@ public class NQueens {
           q = goodQueens.pop();
           col = q.getCol();
           numFilled--;
-        // can we move over one? increase col then we try to increase col
-        // if we cannot the numFilled-- and pop the stack
         }
 
     }
+
     }
+    
     return goodQueens;
 
   }
