@@ -2,6 +2,7 @@ package week6;
 
 import java.util.Scanner;
 import java.util.Stack;
+import week6.Queen;
 
 public class NQueens {
 
@@ -26,7 +27,7 @@ public class NQueens {
     String p;
     String [][] board = new String [n][n];
 
-    for (int k = 0; k<n; k++){
+    for (int k = 0; k < n; k++){
 
       Queen q = solveNQueens.peek();
       int a = q.getRow()-1;
@@ -36,9 +37,9 @@ public class NQueens {
     
     }
 
-    for (int j = 0; j<n; j++){
+    for (int j = 0; j < n; j++){
 
-      for (int h = 0; h<n; h++){
+      for (int h = 0; h <  n; h++){
 
         if (board[j][h] == null)
           board [j][h] = "*";
@@ -47,7 +48,7 @@ public class NQueens {
 
     }
 
-    for (int y = 0; y<n; y++){
+    for (int y = 0; y < n; y++){
 
       System.out.println();
 
@@ -83,20 +84,24 @@ public class NQueens {
       col++;
 
       if (!conflict(new Queen(row, col), goodQueens)&&(col<=n)) {
+
         goodQueens.push(new Queen(row, col));
         numFilled++;
         col = 0;
-      }
-      
+
+      } 
+
       else {
 
-        if (col + 1 > numFilled) {
-          q = goodQueens.pop();
-          col = q.getCol();
-          numFilled--;
+        if (col + 1 > n) {
+
+           q = goodQueens.pop();
+           col = q.getCol();
+            numFilled--;
+
         }
 
-    }
+      }   
 
     }
 
@@ -112,7 +117,6 @@ public class NQueens {
    * @return
    */
   private static boolean conflict(Queen queen, Stack<Queen> goodQueens) {
-
     Stack<Queen> temp = new Stack<Queen>();
 
     while(!goodQueens.isEmpty()){
@@ -120,21 +124,27 @@ public class NQueens {
       Queen q = goodQueens.peek();
 
       if (q.getCol() == queen.getCol() || q.getRow() == queen.getRow() || (Math.abs(q.getCol() - queen.getCol()) == Math.abs(q.getRow() - queen.getRow()))) {
+
         while (!temp.isEmpty())
           goodQueens.push(temp.pop());
         return true;
+
       }
       
       else {
+
         temp.push(goodQueens.pop());
+
       }
 
     }
-    
+
     while (!temp.isEmpty())
+
     goodQueens.push(temp.pop());
+
     return false;  
-  
-    }
+
+  }
 
 }
